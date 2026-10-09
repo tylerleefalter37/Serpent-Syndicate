@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>Serpent Syndicate - Rad 90s Breeder Edition</title>
+<title>Serpent Syndicate - Breeder Edition</title>
 <style>
     :root {
         --bg-dark: #111418;        
@@ -15,6 +15,7 @@
         --bone: #ffffff;
         --text: #adbac7;
         --blood: #ff3333;
+        --gold: #ffd700;
         --canvas-bg: #e1e8ed;      
     }
     
@@ -25,7 +26,7 @@
         color: var(--text);
         font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         margin: 0;
-        padding: 10px;
+        padding: 8px;
         height: 100vh;
         width: 100vw;
         overflow: hidden;
@@ -43,13 +44,13 @@
         overflow: hidden;
     }
     
-    /* TOP DASHBOARD */
+    /* CONDENSED TOP DASHBOARD */
     #top-dashboard {
         display: flex;
         background: var(--panel-bg);
-        border-bottom: 3px solid var(--border);
-        padding: 10px 15px;
-        gap: 15px;
+        border-bottom: 2px solid var(--border);
+        padding: 8px 12px;
+        gap: 12px;
         align-items: center;
         flex-shrink: 0;
     }
@@ -57,9 +58,9 @@
     #portrait-wrapper {
         display: flex;
         flex-direction: column;
-        gap: 8px;
+        gap: 5px;
         align-items: center;
-        width: 150px;
+        width: 110px;
         flex-shrink: 0;
     }
 
@@ -67,13 +68,14 @@
         display: flex;
         justify-content: center;
         background: var(--box-bg);
-        padding: 6px;
-        border: 3px solid var(--border);
+        padding: 4px;
+        border: 2px solid var(--border);
         border-radius: 4px;
         align-items: center;
         width: 100%;
         aspect-ratio: 1/1;
-        box-shadow: 4px 4px 0px var(--cyan);
+        box-shadow: 3px 3px 0px var(--cyan);
+        transition: all 0.3s;
     }
     
     canvas {
@@ -82,23 +84,24 @@
         height: 100%;
         background: var(--canvas-bg);
         border-radius: 2px;
-        border: 2px solid var(--border);
+        border: 1px solid var(--border);
     }
 
     #portrait-placeholder {
         color: var(--text);
         text-align: center;
-        font-size: 0.8em;
+        font-size: 0.7em;
+        line-height: 1.1;
     }
 
     .btn-quick {
         width: 100%;
         background: var(--cyan);
         color: #000;
-        padding: 8px;
-        font-size: 0.9em;
+        padding: 5px;
+        font-size: 0.8em;
         font-weight: 900;
-        border: 2px solid var(--border);
+        border: 1px solid var(--border);
         border-radius: 4px;
         cursor: pointer;
         text-transform: uppercase;
@@ -116,17 +119,17 @@
     .game-title {
         color: var(--cyan);
         font-weight: 900;
-        font-size: 1.8em;
+        font-size: 1.4em;
         text-transform: uppercase;
-        letter-spacing: 2px;
+        letter-spacing: 1px;
         margin-bottom: 2px;
         text-shadow: 2px 2px 0px var(--magenta);
     }
     .entity-header {
-        font-size: 1.1em;
+        font-size: 1em;
         color: var(--bone);
         font-weight: bold;
-        margin-bottom: 5px;
+        margin-bottom: 4px;
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
@@ -134,47 +137,50 @@
     .morph-tag {
         font-style: italic;
         color: var(--magenta);
-        margin-left: 8px;
-        font-size: 0.9em;
+        margin-left: 6px;
+        font-size: 0.85em;
     }
     .dash-stats {
         display: flex;
-        gap: 15px;
-        font-size: 0.9em;
+        gap: 10px;
+        font-size: 0.85em;
         color: var(--bone);
         background: var(--box-bg);
-        padding: 8px 12px;
+        padding: 6px 10px;
         border-radius: 4px;
-        border: 2px solid var(--border);
+        border: 1px solid var(--border);
         flex-wrap: wrap;
     }
+    .dash-stats span {
+        white-space: nowrap;
+    }
 
-    /* NAVIGATION */
     nav {
         display: flex;
         flex-direction: row;
         width: 100%;
         background: var(--panel-bg);
-        border-bottom: 3px solid var(--border);
+        border-bottom: 2px solid var(--border);
         margin: 0;
         padding: 0;
         flex-shrink: 0;
+        overflow-x: auto;
     }
     nav button {
         flex: 1 1 0;
-        min-width: 0;
+        min-width: 80px;
         background: transparent;
         color: var(--text);
         border: none;
-        border-right: 2px solid var(--border);
-        border-bottom: 4px solid transparent;
-        padding: 12px 2px;
+        border-right: 1px solid var(--border);
+        border-bottom: 3px solid transparent;
+        padding: 8px 2px;
         cursor: pointer;
         font-family: inherit;
         font-weight: 900;
         text-transform: uppercase;
         transition: 0.2s;
-        font-size: 0.85em;
+        font-size: 0.75em;
         text-align: center;
         white-space: nowrap;
         overflow: hidden;
@@ -185,22 +191,23 @@
     nav button.active { 
         background: var(--box-bg); 
         color: var(--cyan); 
-        border-bottom: 4px solid var(--magenta); 
+        border-bottom: 3px solid var(--magenta); 
     }
 
-    .tab-content { display: none; flex: 1; padding: 15px; overflow: hidden; background: var(--bg-dark); }
-    .tab-content.active { display: flex; flex-direction: row; gap: 15px; }
+    .tab-content { display: none; flex: 1; padding: 10px; overflow: hidden; background: var(--bg-dark); }
+    .tab-content.active { display: flex; flex-direction: row; gap: 10px; }
+    .tab-content-vertical { flex-direction: column !important; overflow-y: auto !important; }
 
     .panel {
         flex: 1;
         display: flex;
         flex-direction: column;
         background: var(--panel-bg);
-        border: 3px solid var(--border);
+        border: 2px solid var(--border);
         border-radius: 6px;
-        padding: 15px;
+        padding: 12px;
         overflow: hidden;
-        box-shadow: 4px 4px 0px var(--box-bg);
+        box-shadow: 3px 3px 0px var(--box-bg);
     }
 
     .panel-scrollable {
@@ -209,109 +216,139 @@
         padding-right: 5px;
     }
 
+    .panel-auto {
+        flex: none;
+        height: auto;
+        overflow: visible;
+    }
+
     h2 { 
         color: var(--bone); 
         text-align: left; 
         border-bottom: 2px solid var(--border); 
-        padding-bottom: 8px; 
+        padding-bottom: 6px; 
         margin-top: 0;
-        margin-bottom: 15px;
+        margin-bottom: 10px;
         text-transform: uppercase;
-        font-size: 1.2em;
+        font-size: 1.1em;
         font-weight: 900;
         flex-shrink: 0;
     }
     
     .btn {
         width: 100%;
-        padding: 12px;
+        padding: 10px;
         background: var(--cyan);
         color: #000;
         border: 2px solid var(--border);
         font-weight: 900;
-        font-size: 1em;
+        font-size: 0.95em;
         cursor: pointer;
         font-family: inherit;
         text-transform: uppercase;
         transition: 0.1s;
         border-radius: 4px;
-        margin-bottom: 10px;
-        box-shadow: 3px 3px 0px var(--border);
+        margin-bottom: 8px;
+        box-shadow: 2px 2px 0px var(--border);
     }
-    .btn:active { transform: translate(3px, 3px); box-shadow: none; }
+    .btn:active { transform: translate(2px, 2px); box-shadow: none; }
+    .btn:disabled { filter: grayscale(100%); opacity: 0.5; cursor: not-allowed; box-shadow: none; transform: translate(2px, 2px); }
     
     .btn-magenta { background: var(--magenta); color: #fff; }
     .btn-dark { background: var(--box-bg); color: var(--bone); }
+    .btn-blood { background: var(--blood); color: #fff; }
 
     select {
         width: 100%;
-        padding: 10px;
+        padding: 8px;
         background: var(--bg-dark);
         color: var(--bone);
-        border: 2px solid var(--border);
+        border: 1px solid var(--border);
         font-family: inherit;
-        font-size: 0.9em;
-        margin-bottom: 10px;
+        font-size: 0.85em;
+        margin-bottom: 8px;
         border-radius: 4px;
         outline: none;
     }
 
-    .stats-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 15px;}
-    .stat-box { background: var(--box-bg); border-radius: 4px; padding: 10px; display: flex; justify-content: space-between; align-items: center; border: 2px solid var(--border); }
-    .stat-name { color: var(--bone); font-size: 0.85em; font-weight: 900;}
-    .stat-val { color: var(--cyan); font-weight: 900; font-size: 1.1em; }
-    .stat-bonus { color: var(--magenta); font-size: 0.85em; margin-left: 5px; font-weight: bold;}
-    
-    .market-row { display: flex; justify-content: space-between; align-items: center; background: var(--box-bg); padding: 8px 10px; border-radius: 4px; margin-bottom: 8px; border: 2px solid var(--border); flex-wrap: wrap; gap: 8px;}
-    .market-btn { padding: 6px 10px; font-size: 0.8em; cursor: pointer; border: 2px solid var(--border); font-weight: 900; border-radius: 3px; color: #000;}
-    .btn-buy { background: var(--cyan); }
-    .btn-sell { background: var(--magenta); color: #fff; }
+    textarea {
+        width: 100%;
+        height: 60px;
+        background: #000;
+        color: var(--cyan);
+        border: 2px solid var(--border);
+        font-family: monospace;
+        font-size: 0.75em;
+        margin-bottom: 8px;
+        border-radius: 4px;
+        padding: 8px;
+        resize: none;
+    }
 
-    .log-box { background: var(--bg-dark); border-radius: 4px; flex: 1; overflow-y: auto; padding: 10px; font-size: 0.85em; line-height: 1.4; font-family: monospace; border: 2px solid var(--border);}
-    .log-entry { margin-bottom: 5px; border-bottom: 1px dashed #333; padding-bottom: 5px; color: var(--bone);}
+    .stats-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; margin-bottom: 12px;}
+    .stat-box { background: var(--box-bg); border-radius: 4px; padding: 8px; display: flex; justify-content: space-between; align-items: center; border: 1px solid var(--border); }
+    .stat-name { color: var(--bone); font-size: 0.8em; font-weight: 900;}
+    .stat-val { color: var(--cyan); font-weight: 900; font-size: 1em; }
+    .stat-bonus { color: var(--magenta); font-size: 0.8em; margin-left: 5px; font-weight: bold;}
+    
+    .market-btn { padding: 5px 8px; font-size: 0.75em; cursor: pointer; border: 1px solid var(--border); font-weight: 900; border-radius: 3px; color: #000;}
+    
+    .log-box { background: var(--bg-dark); border-radius: 4px; flex: 1; overflow-y: auto; padding: 8px; font-size: 0.8em; line-height: 1.4; font-family: monospace; border: 1px solid var(--border);}
+    .log-entry { margin-bottom: 4px; border-bottom: 1px dashed #333; padding-bottom: 4px; color: var(--bone);}
     .highlight { color: var(--cyan); font-weight: bold;}
-    .warning { color: var(--magenta); font-weight: bold;}
-    .mythic-text { color: #ffffff; text-shadow: 0 0 5px #ffffff, 0 0 10px var(--magenta); font-weight: bold; }
+    .warning { color: var(--blood); font-weight: bold;}
+    .mythic-text { color: #ffffff; text-shadow: 0 0 5px #ffffff, 0 0 10px var(--gold); font-weight: bold; }
     
-    .timer-bar { background: var(--bg-dark); border-radius: 4px; height: 18px; width: 100%; position: relative; margin-bottom: 15px; overflow: hidden; border: 2px solid var(--border); flex-shrink: 0;}
-    .timer-fill { background: var(--magenta); height: 100%; width: 100%; transition: width 1s linear; }
-    .timer-text { position: absolute; width: 100%; text-align: center; top: 1px; font-size: 0.7em; color: #fff; font-weight: 900; letter-spacing: 1px;}
+    .timer-bar { background: var(--bg-dark); border-radius: 4px; height: 14px; width: 100%; position: relative; margin-bottom: 10px; overflow: hidden; border: 1px solid var(--border); flex-shrink: 0;}
+    .timer-fill { background: var(--magenta); height: 100%; width: 100%; transition: width 0.1s linear; }
+    .timer-text { position: absolute; width: 100%; text-align: center; top: 0; font-size: 0.65em; color: #fff; font-weight: 900; letter-spacing: 1px;}
 
-    .augment-item { background: var(--bg-dark); border-left: 5px solid var(--cyan); padding: 10px; margin-bottom: 8px; font-size: 0.85em; border-radius: 0 4px 4px 0; border-top: 1px solid var(--border); border-right: 1px solid var(--border); border-bottom: 1px solid var(--border);}
-    .aug-stats { color: var(--cyan); font-size: 0.9em; margin-top: 3px; font-weight: bold;}
+    .augment-item { background: var(--bg-dark); border-left: 4px solid var(--cyan); padding: 8px; margin-bottom: 6px; font-size: 0.8em; border-radius: 0 4px 4px 0; border-top: 1px solid var(--border); border-right: 1px solid var(--border); border-bottom: 1px solid var(--border);}
+    .aug-stats { color: var(--cyan); font-size: 0.9em; margin-top: 2px; font-weight: bold;}
 
-    .archive-item { background: var(--bg-dark); padding: 8px; margin-bottom: 6px; font-size: 0.85em; display: flex; justify-content: space-between; border-radius: 4px; border: 1px solid var(--border);}
+    .archive-item { background: var(--bg-dark); padding: 6px; margin-bottom: 6px; font-size: 0.8em; display: flex; justify-content: space-between; border-radius: 4px; border: 1px solid var(--border);}
 
     .rack-item { 
         display: flex; 
         justify-content: space-between; 
         align-items: center; 
         background: var(--bg-dark); 
-        padding: 10px 12px; 
-        margin-bottom: 8px; 
+        padding: 8px 10px; 
+        margin-bottom: 6px; 
         border-radius: 4px; 
-        border: 2px solid var(--border);
-        border-left: 6px solid var(--magenta); 
-        gap: 10px;
+        border: 1px solid var(--border);
+        border-left: 5px solid var(--magenta); 
+        gap: 8px;
     }
-    .rack-rank { font-size: 0.9em; font-weight: 900; color: var(--cyan); min-width: 32px; }
-    .rack-info { flex: 1; min-width: 140px; }
-    .rack-parents { font-size: 0.75em; color: var(--text); margin-top: 2px; line-height: 1.2; }
-    .rack-actions { display: flex; gap: 5px; align-items: center; flex-shrink: 0; }
+    .rack-rank { font-size: 0.85em; font-weight: 900; color: var(--cyan); min-width: 25px; }
+    .rack-info { flex: 1; min-width: 130px; }
+    .rack-parents { font-size: 0.7em; color: var(--text); margin-top: 2px; line-height: 1.2; }
+    .rack-actions { display: flex; gap: 4px; align-items: center; flex-shrink: 0; flex-wrap: wrap;}
 
-    /* Mobile Adjustments */
+    .contract-item { background: var(--box-bg); padding: 10px; border-radius: 4px; border: 1px solid var(--border); border-left: 4px solid var(--gold); margin-bottom: 8px; }
+    .contract-header { font-weight: 900; color: var(--bone); font-size: 0.9em; margin-bottom: 4px; }
+    .contract-info { font-size: 0.8em; color: var(--text); margin-bottom: 8px; }
+
+    .dealer-card { background: var(--bg-dark); border: 2px solid var(--border); border-radius: 6px; padding: 10px; margin-bottom: 10px; display: flex; align-items: center; gap: 10px; box-shadow: 2px 2px 0 var(--magenta); }
+    .dealer-canvas { width: 64px; height: 64px; border: 1px solid var(--border); border-radius: 4px; background: var(--canvas-bg); image-rendering: pixelated; }
+
     @media (max-width: 768px) {
-        #top-dashboard { flex-direction: column; text-align: center; padding: 10px; }
-        #portrait-wrapper { width: 100%; max-width: 180px; margin: 0 auto; }
-        .dash-stats { justify-content: center; }
-        .responsive-split { flex-direction: column; }
+        #top-dashboard { flex-direction: row; text-align: left; padding: 6px; align-items: center; gap: 10px; }
+        #portrait-wrapper { width: 85px; gap: 4px; }
+        #portrait-placeholder { font-size: 0.6em; }
+        .btn-quick { font-size: 0.7em; padding: 4px; border-width: 1px; }
+        .game-title { font-size: 1.1em; letter-spacing: 0; margin-bottom: 0; }
+        .entity-header { font-size: 0.9em; margin-bottom: 2px; }
+        .dash-stats { flex-direction: row; gap: 8px; padding: 4px; font-size: 0.7em; }
+        
+        .responsive-split { flex-direction: column; gap: 8px; }
         .responsive-split > div { min-width: 100%; width: 100%; }
         .stats-grid { grid-template-columns: 1fr; }
         .rack-item { flex-direction: column; text-align: center; }
         .rack-actions { width: 100%; justify-content: center; }
-        nav button { font-size: 0.7em; padding: 10px 1px; }
-        .tab-content.active { flex-direction: column; overflow-y: auto; padding: 10px; }
-        .panel { flex: none; height: auto; min-height: 400px; } 
+        nav button { font-size: 0.65em; padding: 8px 1px; }
+        .tab-content.active { flex-direction: column; overflow-y: auto; padding: 8px; }
+        .panel { flex: none; height: auto; min-height: 350px; padding: 10px; } 
     }
 </style>
 </head>
@@ -319,7 +356,6 @@
 
 <div id="game-container">
     
-    <!-- DASHBOARD -->
     <div id="top-dashboard">
         <div id="portrait-wrapper">
             <div id="portrait-container">
@@ -337,39 +373,50 @@
             </div>
             <div class="dash-stats">
                 <span>Funds: $<strong id="m-wallet" style="color: var(--cyan);">0</strong></span>
-                <span>Prestige: <strong id="m-prestige" style="color: var(--magenta);">0</strong></span>
-                <span>Facility: <strong id="m-rack-stat" style="color: var(--bone);">0/20</strong></span>
+                <span>Bank: $<strong id="m-bank" style="color: var(--gold);">0</strong></span>
+                <span>Value Multi: <strong id="m-prestige" style="color: var(--magenta);">x1.0</strong></span>
+                <span>Discovered: <strong id="m-discovered" style="color: var(--bone);">0</strong></span>
+                <span>Facility: <strong id="m-rack-stat" style="color: var(--bone);">0/100</strong></span>
             </div>
         </div>
     </div>
 
-    <!-- HORIZONTAL NAV -->
     <nav>
         <button class="tab-btn active" data-target="tab-breed">BREED</button>
         <button class="tab-btn" data-target="tab-storage">RACKS</button>
         <button class="tab-btn" data-target="tab-profile">PROFILE</button>
+        <button class="tab-btn" data-target="tab-zoo">ZOO & BUSINESS</button>
         <button class="tab-btn" data-target="tab-shows">SHOWS</button>
-        <button class="tab-btn" data-target="tab-expo">EXPO</button>
+        <button class="tab-btn" data-target="tab-dealer">IMPORTER</button>
+        <button class="tab-btn" data-target="tab-odds">ODDS</button>
     </nav>
 
-    <!-- BREEDING ROOM -->
     <div id="tab-breed" class="tab-content active">
         <div class="panel">
             <h2>Incubation Controls</h2>
             <div class="panel-scrollable">
-                <button class="btn" id="btn-summon" style="padding: 18px; font-size: 1.1em; margin-bottom: 15px;">Incubate Random Clutch</button>
+                <button class="btn" id="btn-summon" style="padding: 14px; font-size: 1.05em; margin-bottom: 8px;">Incubate Random Clutch</button>
+                <div class="timer-bar" id="clutch-bar" style="display:none; height: 10px; margin-bottom: 8px;">
+                    <div class="timer-fill" id="clutch-fill" style="width: 0%; background: var(--cyan);"></div>
+                </div>
                 
-                <div style="background: var(--box-bg); padding: 12px; border-radius: 4px; border: 2px solid var(--border); margin-bottom: 15px;">
-                    <label style="font-size: 0.85em; color: var(--bone); font-weight:bold; display: block; margin-bottom: 5px;">Hatch Line-Bred Morph:</label>
+                <div style="display:flex; gap:5px; margin-bottom: 12px;">
+                    <button class="btn btn-dark" id="btn-auto-hatch" style="margin-bottom: 0; border-style: dashed; font-size: 0.75em; flex:1;">Auto-Incubate (3s)</button>
+                    <button class="btn btn-magenta" id="btn-auto-breed" style="margin-bottom: 0; border-style: dashed; font-size: 0.75em; flex:1;">Auto-Synthesize Top Pair (2s)</button>
+                </div>
+
+                <div style="background: var(--box-bg); padding: 10px; border-radius: 4px; border: 1px solid var(--border); margin-bottom: 12px;">
+                    <label style="font-size: 0.8em; color: var(--bone); font-weight:bold; display: block; margin-bottom: 5px;">Hatch Line-Bred Morph:</label>
                     <select id="morph-select"><option value="">-- No Morphs Unlocked --</option></select>
                     <button class="btn btn-magenta" id="btn-summon-morph" style="margin-bottom:0;">Breed Selected Line</button>
                 </div>
 
-                <div style="background: var(--box-bg); padding: 12px; border-radius: 4px; border: 2px solid var(--border); margin-bottom: 15px;">
-                    <label style="font-size: 0.85em; color: var(--bone); font-weight:bold; display: block; margin-bottom: 5px;">Synthesize Hybrid (Sire x Dam):</label>
+                <div style="background: var(--box-bg); padding: 10px; border-radius: 4px; border: 1px solid var(--border); margin-bottom: 12px;">
+                    <label style="font-size: 0.8em; color: var(--bone); font-weight:bold; display: block; margin-bottom: 3px;">Synthesize Hybrid (Sire x Dam):</label>
+                    <p style="font-size: 0.7em; color: var(--text); margin-top: 0; margin-bottom: 6px;">Yields 3-6 hatchlings. Guarantees 2 top traits from each parent.</p>
                     <select id="cross-1"><option value="">-- Select Sire from Rack --</option></select>
-                    <select id="cross-2" style="margin-top: 5px;"><option value="">-- Select Dam from Rack --</option></select>
-                    <button class="btn btn-dark" id="btn-crossbreed" style="margin-top: 10px; margin-bottom:0;">Synthesize Hybrid</button>
+                    <select id="cross-2" style="margin-top: 4px;"><option value="">-- Select Dam from Rack --</option></select>
+                    <button class="btn btn-dark" id="btn-crossbreed" style="margin-top: 8px; margin-bottom:0;">Synthesize Hybrid Clutch</button>
                 </div>
             </div>
         </div>
@@ -377,282 +424,296 @@
         <div class="panel">
             <h2>Breeder Tools</h2>
             <div class="panel-scrollable">
-                <div style="background: var(--box-bg); padding: 15px; border-radius: 4px; border: 2px solid var(--border); margin-bottom: 15px;">
-                    <label style="font-size: 0.85em; color: var(--bone); font-weight:bold; display: block; margin-bottom: 5px;">Storage Facility Capacity:</label>
-                    <button class="btn btn-dark" id="btn-upgrade-rack" style="font-size: 0.85em; padding: 10px; margin-bottom: 15px;">Expand Storage (+10)</button>
-                    
-                    <label style="font-size: 0.85em; color: var(--bone); font-weight:bold; display: block; margin-bottom: 5px;">Incubation Climate Quality:</label>
-                    <button class="btn btn-dark" id="btn-upgrade-incubator" style="font-size: 0.85em; padding: 10px; margin-bottom: 5px;">Upgrade Incubators (+Stats)</button>
+                
+                <div style="background: var(--box-bg); padding: 10px; border-radius: 4px; border: 1px solid var(--border); margin-bottom: 12px; border-left: 4px solid var(--magenta);">
+                    <label style="font-size: 0.8em; color: var(--magenta); font-weight:bold; display: block; margin-bottom: 4px;">Mystery Exotic Egg:</label>
+                    <p style="font-size: 0.7em; color: var(--text); margin-top: 0; margin-bottom: 6px;">Pay $1k to import an egg. Must pass 3 survival checks (90%, 85%, 80%). Guaranteed God Tier or Apex mutant if survived.</p>
+                    <button class="btn btn-magenta" id="btn-mystery-egg" style="font-size: 0.85em; padding: 8px; margin-bottom: 0;">Import Mystery Egg ($1k)</button>
                 </div>
 
-                <div style="display: flex; gap: 10px; flex-wrap: wrap;">
-                    <button class="btn btn-dark" id="btn-save" style="flex:1;">Save</button>
-                    <button class="btn" id="btn-wipe" style="flex:1; background: var(--blood); color: #fff;">Clear</button>
-                    <button class="btn" id="btn-god" style="flex:1; background: #fff; color: #000;">GOD MODE</button>
+                <div style="background: var(--box-bg); padding: 10px; border-radius: 4px; border: 1px solid var(--border); margin-bottom: 12px; border-left: 4px solid var(--gold);">
+                    <label style="font-size: 0.85em; color: var(--gold); font-weight:bold; display: block; margin-bottom: 4px;">High-Yield Savings:</label>
+                    <p style="font-size: 0.7em; color: var(--text); margin-top: 0; margin-bottom: 6px;">Deposits earn an automatic 2% interest every 60 seconds.</p>
+                    <div style="display:flex; gap:5px;">
+                        <button class="market-btn btn-buy" style="flex:1; background:var(--gold);" id="btn-bank-dep">DEPOSIT ALL</button>
+                        <button class="market-btn btn-sell" style="flex:1;" id="btn-bank-with">WITHDRAW ALL</button>
+                    </div>
                 </div>
+
+                <div style="background: var(--box-bg); padding: 10px; border-radius: 4px; border: 1px solid var(--border); margin-bottom: 12px;">
+                    <label style="font-size: 0.8em; color: var(--bone); font-weight:bold; display: block; margin-bottom: 4px;">Storage Facility Capacity:</label>
+                    <button class="btn btn-dark" id="btn-upgrade-rack" style="font-size: 0.85em; padding: 8px; margin-bottom: 12px;">Expand Storage (+10)</button>
+                    
+                    <label style="font-size: 0.8em; color: var(--bone); font-weight:bold; display: block; margin-bottom: 2px;">Incubation Climate (<span id="inc-lvl-display">Lvl 0 (+0)</span>):</label>
+                    <p style="font-size: 0.7em; color: var(--text); margin-top: 0; margin-bottom: 6px;">Rolls +5 to +25 permanent base stats per upgrade.</p>
+                    <div style="display:flex; gap:4px; margin-bottom:4px;">
+                        <button class="market-btn btn-buy" style="flex:1;" id="btn-inc-1">BUY 1</button>
+                        <button class="market-btn btn-buy" style="flex:1;" id="btn-inc-half">BUY 1/2</button>
+                        <button class="market-btn btn-buy" style="flex:1;" id="btn-inc-max">BUY MAX</button>
+                    </div>
+                    <div id="inc-cost-display" style="text-align:center; font-size: 0.75em; color: var(--cyan); font-weight: bold; margin-top: 4px;">Cost: $2,500</div>
+                </div>
+
             </div>
         </div>
     </div>
 
-    <!-- STORAGE RACKS -->
     <div id="tab-storage" class="tab-content">
         <div class="panel">
-            <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid var(--border); padding-bottom: 8px; margin-bottom: 12px; flex-wrap: wrap; gap: 8px; flex-shrink: 0;">
+            <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border); padding-bottom: 6px; margin-bottom: 8px; flex-wrap: wrap; gap: 6px; flex-shrink: 0;">
                 <h2 style="border-bottom: none; padding-bottom: 0; margin-bottom: 0;">Reptile Rack Vault (<span id="rack-count">0</span> / 100)</h2>
-                <div style="display: flex; gap: 5px;">
-                    <button class="btn btn-dark" id="btn-sort-val" style="width: auto; padding: 6px 12px; font-size: 0.8em; margin-bottom: 0;">Sort By Value</button>
+                <div style="display: flex; gap: 5px; flex-wrap: wrap;">
+                    <button class="btn btn-dark" id="btn-sort-recent" style="width: auto; padding: 6px 10px; font-size: 0.75em; margin-bottom: 0;">Recent</button>
+                    <button class="btn btn-dark" id="btn-sort-val" style="width: auto; padding: 6px 10px; font-size: 0.75em; margin-bottom: 0;">Value</button>
+                    <button class="btn btn-dark" id="btn-sort-rarity" style="width: auto; padding: 6px 10px; font-size: 0.75em; margin-bottom: 0;">Rarity</button>
                 </div>
             </div>
             <div class="panel-scrollable" id="rack-container">
-                <div style="text-align:center; color: #777; margin-top: 50px; font-weight:bold;">Racks are empty. Incubate your first clutch!</div>
+                <div style="text-align:center; color: #777; margin-top: 40px; font-weight:bold; font-size: 0.9em;">Racks are empty. Incubate your first clutch!</div>
             </div>
         </div>
     </div>
 
-    <!-- SNAKE PROFILE -->
-    <div id="tab-profile" class="tab-content">
-        <div class="responsive-split">
+    <div id="tab-profile" class="tab-content tab-content-vertical">
+        
+        <div class="responsive-split" style="display: flex; flex-direction: row; gap: 10px;">
             <div class="panel">
-                <h2>Physiological Stats</h2>
-                <div class="panel-scrollable">
-                    <div class="stats-grid">
-                        <div class="stat-box"><span class="stat-name">HLTH</span> <div><span class="stat-val" id="m-lif">0</span><span class="stat-bonus" id="b-lif"></span></div></div>
-                        <div class="stat-box"><span class="stat-name">LENG</span> <div><span class="stat-val" id="m-pow">0</span><span class="stat-bonus" id="b-pow"></span></div></div>
-                        <div class="stat-box"><span class="stat-name">GIR</span> <div><span class="stat-val" id="m-int">0</span><span class="stat-bonus" id="b-int"></span></div></div>
-                        <div class="stat-box"><span class="stat-name">TMPR</span> <div><span class="stat-val" id="m-ski">0</span><span class="stat-bonus" id="b-ski"></span></div></div>
-                        <div class="stat-box"><span class="stat-name">FEED</span> <div><span class="stat-val" id="m-spd">0</span><span class="stat-bonus" id="b-spd"></span></div></div>
-                        <div class="stat-box"><span class="stat-name">PATT</span> <div><span class="stat-val" id="m-def">0</span><span class="stat-bonus" id="b-def"></span></div></div>
-                    </div>
-
-                    <div style="background: var(--bg-dark); border: 2px solid var(--border); border-radius: 4px; padding: 15px; margin-top: 15px; text-align: center;">
-                        <div style="display: flex; justify-content: space-between; font-size: 0.9em; color: var(--text); margin-bottom: 5px; font-weight:bold;">
-                            <span>Base Market Value:</span> <span id="val-base">$0</span>
-                        </div>
-                        <div style="display: flex; justify-content: space-between; font-size: 0.9em; color: var(--magenta); margin-bottom: 10px; border-bottom: 2px solid var(--border); padding-bottom: 10px; font-weight:bold;">
-                            <span>Genetic Multiplier:</span> <span id="val-mult">x1.0</span>
-                        </div>
-                        <div style="font-size: 1.1em; color: var(--bone); margin-bottom: 5px; font-weight:900;">Total Appraisal Value:</div>
-                        <div id="snake-value" style="font-size: 2em; color: var(--cyan); font-weight: 900; margin-bottom: 15px; text-shadow: 2px 2px 0px var(--border);">$0</div>
-                        <button class="btn btn-magenta" id="btn-sell-snake" style="font-size: 1.1em; padding: 15px; margin-bottom: 0;">Sell Reptile</button>
-                    </div>
+                
+                <div style="background: var(--box-bg); padding: 10px; border-radius: 4px; border: 1px solid var(--border); margin-bottom: 12px; border-left: 4px solid var(--cyan);">
+                    <h3 style="color: var(--cyan); margin-top:0; margin-bottom: 4px; text-transform: uppercase; font-size: 0.9em;">Genetic Profile</h3>
+                    <div style="font-size: 0.85em; color: var(--bone); margin-bottom: 2px;"><strong>Species:</strong> <span id="m-prof-species">--</span></div>
+                    <div style="font-size: 0.85em; color: var(--magenta); font-weight: bold; margin-bottom: 2px;" id="m-prof-variant">--</div>
+                    <div style="font-size: 0.75em; color: var(--text); font-family: monospace;"><strong>Base DNA:</strong> <span id="m-prof-dna">--</span></div>
+                    <div style="font-size: 0.85em; color: var(--gold); font-weight: bold; margin-top: 4px;"><strong>Rarity Score:</strong> <br><span id="m-prof-rarity">0</span></div>
                 </div>
+
+                <h2>Physiological Stats</h2>
+                <div class="stats-grid">
+                    <div class="stat-box"><span class="stat-name">HLTH</span> <div><span class="stat-val" id="m-lif">0</span><span class="stat-bonus" id="b-lif"></span></div></div>
+                    <div class="stat-box"><span class="stat-name">LENG</span> <div><span class="stat-val" id="m-pow">0</span><span class="stat-bonus" id="b-pow"></span></div></div>
+                    <div class="stat-box"><span class="stat-name">GIR</span> <div><span class="stat-val" id="m-int">0</span><span class="stat-bonus" id="b-int"></span></div></div>
+                    <div class="stat-box"><span class="stat-name">TMPR</span> <div><span class="stat-val" id="m-ski">0</span><span class="stat-bonus" id="b-ski"></span></div></div>
+                    <div class="stat-box"><span class="stat-name">FEED</span> <div><span class="stat-val" id="m-spd">0</span><span class="stat-bonus" id="b-spd"></span></div></div>
+                    <div class="stat-box"><span class="stat-name">PATT</span> <div><span class="stat-val" id="m-def">0</span><span class="stat-bonus" id="b-def"></span></div></div>
+                </div>
+
+                <div style="background: var(--bg-dark); border: 1px solid var(--border); border-radius: 4px; padding: 12px; margin-top: 12px; text-align: center;">
+                    <div style="display: flex; justify-content: space-between; font-size: 0.85em; color: var(--text); margin-bottom: 4px; font-weight:bold;">
+                        <span>Base Market Value:</span> <span id="val-base">$0</span>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; font-size: 0.85em; color: var(--magenta); margin-bottom: 8px; border-bottom: 1px solid var(--border); padding-bottom: 8px; font-weight:bold;">
+                        <span>Genetic Multiplier:</span> <span id="val-mult">x1.0</span>
+                    </div>
+                    <div style="font-size: 1em; color: var(--bone); margin-bottom: 4px; font-weight:900;">Total Appraisal Value:</div>
+                    <div id="snake-value" style="font-size: 1.6em; color: var(--cyan); font-weight: 900; margin-bottom: 10px; text-shadow: 1px 1px 0px var(--border);">$0</div>
+                    <button class="btn btn-magenta" id="btn-sell-snake" style="font-size: 1em; padding: 10px; margin-bottom: 0;">Sell Reptile</button>
+                </div>
+
             </div>
             
             <div class="panel">
                 <h2>Innate Genetic Traits</h2>
-                <p style="font-size: 0.8em; color: var(--text); margin-top: -5px; flex-shrink:0;">These traits stacked at incubation, driving this snake's value up.</p>
-                <div class="panel-scrollable" id="equipped-list">
-                    <div style="text-align:center; color: #777; margin-top: 50px; font-weight:bold;">No traits detected.</div>
+                <p style="font-size: 0.75em; color: var(--text); margin-top: -5px; flex-shrink:0;">These traits stacked at incubation, driving this snake's value up.</p>
+                <div class="panel-scrollable" id="equipped-list" style="max-height: 250px;">
+                    <div style="text-align:center; color: #777; margin-top: 40px; font-weight:bold; font-size:0.9em;">No traits detected.</div>
+                </div>
+
+                <div style="margin-top: 15px; border-top: 1px dashed var(--magenta); padding-top: 10px;">
+                    <h3 style="color: var(--cyan); margin-top:0; margin-bottom: 6px; text-transform: uppercase; font-size: 0.9em;">Experimental Genetics</h3>
+                    <p style="font-size: 0.7em; color: var(--text); margin-top: 0; margin-bottom: 8px;">10% chance of death. 90% chance to mutate 3 to 13 Legendary+ traits.</p>
+                    <button class="btn btn-blood" id="btn-mutagen" style="margin-bottom: 0; font-size: 0.8em; padding: 8px;">Feed Mutagen Mouse ($250k)</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="responsive-split" style="display: flex; flex-direction: row; gap: 10px; margin-top: 10px;">
+            <div class="panel panel-auto">
+                <h2 style="border-bottom: 2px solid var(--border); color: var(--gold);">System Memory Vault</h2>
+                <p style="font-size: 0.75em; color: var(--text); margin-top: -5px; margin-bottom: 10px;">Generate your save code and store it safely. Paste a code below to overwrite current facility data.</p>
+                
+                <button class="btn btn-dark" id="btn-export" style="font-size: 0.8em; padding: 8px; margin-bottom: 5px; border-color:var(--gold); color:var(--gold);">Generate Save Code</button>
+                <textarea id="save-export-box" readonly placeholder="Your generated save code will appear here..."></textarea>
+                
+                <textarea id="save-import-box" placeholder="Paste your save code here to import..."></textarea>
+                <button class="btn btn-dark" id="btn-import" style="font-size: 0.8em; padding: 8px; margin-bottom: 10px; border-color:var(--cyan); color:var(--cyan);">Import Save Code</button>
+                
+                <div style="margin-top: 10px; border-top: 1px dashed var(--blood); padding-top: 10px;">
+                    <h3 style="color: var(--blood); margin-top:0; margin-bottom: 6px; text-transform: uppercase; font-size: 0.9em;">Danger Zone</h3>
+                    <button class="btn btn-blood" id="btn-wipe" style="margin-bottom: 0; font-size: 0.8em; padding: 8px; background: #800000;">Wipe All Facility Data</button>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- SHOWCASES -->
-    <div id="tab-shows" class="tab-content">
+    <div id="tab-zoo" class="tab-content">
+        
         <div class="panel">
-            <h2>Exhibition & Competitions</h2>
-            <p style="color: var(--text); font-size: 0.9em; margin-bottom: 15px;">Network at shows to instantly acquire random expo supplies without combat.</p>
+            <h2>Zoo Displays</h2>
+            <p style="font-size: 0.8em; color: var(--text); margin-top: -5px; margin-bottom: 12px;">Dispatch up to 3 snakes on 90-second tours. Payout is based heavily on the snake's base value.</p>
             
-            <div style="display: flex; gap: 15px; margin-bottom: 15px; flex-shrink: 0; flex-wrap: wrap;">
-                <button class="btn btn-dark" id="btn-scavenge" style="flex: 1; padding: 20px;">Attend Local Herp Show<br><span style="font-size: 0.75em; font-weight:bold; color: var(--cyan); display:block; margin-top:5px;">Loot 1 to 500 Random Items</span></button>
-                <button class="btn btn-magenta" id="btn-boss" style="flex: 1; padding: 20px;">National Syndicate Expo<br><span style="font-size: 0.75em; font-weight:bold; color: #fff; display:block; margin-top:5px;">Loot 1,000 to 50,000 High-Tier Items</span></button>
+            <div style="background: var(--box-bg); padding: 10px; border-radius: 4px; border: 1px solid var(--border); margin-bottom: 15px;">
+                <label style="font-size: 0.85em; color: var(--bone); font-weight:bold; display: block; margin-bottom: 5px;">Select Snake to Rent:</label>
+                <select id="zoo-snake-select"><option value="">-- Rack Empty --</option></select>
+                
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 6px; margin-top: 5px;">
+                    <button class="btn btn-dark" id="btn-rent-local" style="margin-bottom:0; font-size:0.8em;">Local Zoo (5x-25x)</button>
+                    <button class="btn btn-dark" id="btn-rent-regional" style="margin-bottom:0; font-size:0.8em;">Regional Zoo (25x-75x)</button>
+                    <button class="btn btn-dark" id="btn-rent-state" style="margin-bottom:0; font-size:0.8em;">State Zoo (75x-150x)</button>
+                    <button class="btn btn-magenta" id="btn-rent-national" style="margin-bottom:0; font-size:0.8em;">National Zoo (150x-250x)</button>
+                </div>
             </div>
-            <div class="log-box" id="log-box">
-                <div class="log-entry">> Breeder terminal active. Ready for exhibitions.</div>
+
+            <h2 style="border-top: 2px solid var(--border); padding-top: 10px;">Active Tours (<span id="tour-count">0</span>/3)</h2>
+            <div class="panel-scrollable" id="rentals-container" style="max-height: 150px;">
+                <div style="text-align:center; color: #777; margin-top: 30px; font-weight:bold; font-size:0.9em;">No snakes currently on tour.</div>
+            </div>
+
+            <div style="margin-top: 15px; border-top: 2px dashed var(--magenta); padding-top: 10px;">
+                <h3 style="color: var(--cyan); margin-top:0; margin-bottom: 6px; text-transform: uppercase; font-size: 0.9em;">Recent Zoo Payouts</h3>
+                <div id="zoo-log" style="font-size: 0.75em; color: var(--bone); line-height: 1.4; max-height: 80px; overflow-y: auto;">
+                    <div style="color: #777; font-style: italic;">No payouts recorded yet.</div>
+                </div>
             </div>
         </div>
+
         <div class="panel">
-            <h2>World-Class Breeder Archive</h2>
-            <div class="panel-scrollable" id="archive-list">
-                <div style="text-align:center; color: #777; margin-top: 30px; font-weight:bold;">No legendary reptiles produced yet.</div>
+            <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid var(--border); padding-bottom: 6px; margin-bottom: 10px;">
+                <h2 style="border:none; margin:0; padding:0;">Breeding Contracts</h2>
+                <span style="font-size: 0.8em; color: var(--cyan); font-weight:bold;">Refresh: <span id="contract-timer-text">60</span>s</span>
+            </div>
+            <p style="font-size: 0.8em; color: var(--text); margin-top: -5px; margin-bottom: 12px;">Buyers want genetic material from your rack. Accept for instant cash, or haggle (+15-30% Payout / -10% Chance). Below 50% chance voids the contract.</p>
+            <div class="panel-scrollable" id="contracts-container">
+                <div style="text-align:center; color: #777; margin-top: 30px; font-weight:bold; font-size:0.9em;">You need snakes in your rack to receive contracts!</div>
+            </div>
+        </div>
+
+    </div>
+
+    <div id="tab-shows" class="tab-content">
+        <div class="panel">
+            <h2>Sanctioned Competitions</h2>
+            <p style="color: var(--text); font-size: 0.85em; margin-bottom: 12px;">Enter your snake into a stat contest against two rivals of the same species tier. Win to earn massive cash and a Prize Snake with 5 guaranteed Legendary+ traits! (30s Cooldown)</p>
+            
+            <div style="background: var(--box-bg); padding: 10px; border-radius: 4px; border: 1px solid var(--border); margin-bottom: 15px;">
+                <label style="font-size: 0.85em; color: var(--bone); font-weight:bold; display: block; margin-bottom: 5px;">Select Snake:</label>
+                <select id="comp-snake-select"><option value="">-- Rack Empty --</option></select>
+                
+                <label style="font-size: 0.85em; color: var(--bone); font-weight:bold; display: block; margin-top: 8px; margin-bottom: 5px;">Select Stat to Compare:</label>
+                <select id="comp-stat-select">
+                    <option value="LIF">HLTH (Health)</option>
+                    <option value="POW">LENG (Length)</option>
+                    <option value="INT">GIR (Girth)</option>
+                    <option value="SKI">TMPR (Temperament)</option>
+                    <option value="SPD">FEED (Feeding Response)</option>
+                    <option value="DEF">PATT (Pattern)</option>
+                    <option value="rarityScore">Overall Rarity Score</option>
+                </select>
+                
+                <button class="btn btn-magenta" id="btn-run-comp" style="margin-top: 10px; margin-bottom: 0;">Enter Competition</button>
+            </div>
+            
+            <div class="log-box" id="comp-log-box" style="flex: none; height: 100px;">
+                <div class="log-entry">> Competition registry active. Waiting for entries...</div>
+            </div>
+        </div>
+        
+        <div class="panel">
+            <h2>Exhibition & Conventions</h2>
+            <p style="color: var(--text); font-size: 0.85em; margin-bottom: 12px;">Attend circuits to instantly acquire random expo supplies. National Expos grant +50% Global Multiplier.</p>
+            
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 12px; flex-shrink: 0;">
+                <button class="btn btn-dark" id="btn-scavenge-local" style="padding: 12px; font-size:0.85em;">Local Show<br><span style="font-size: 0.75em; color: var(--cyan); display:block; margin-top:4px;">1 to 500 Items</span></button>
+                <button class="btn btn-dark" id="btn-scavenge-regional" style="padding: 12px; font-size:0.85em;">Regional Show<br><span style="font-size: 0.75em; color: var(--cyan); display:block; margin-top:4px;">500 to 2.5k Items</span></button>
+                <button class="btn btn-dark" id="btn-scavenge-state" style="padding: 12px; font-size:0.85em;">State Show<br><span style="font-size: 0.75em; color: var(--cyan); display:block; margin-top:4px;">2.5k to 10k Items</span></button>
+                <button class="btn btn-magenta" id="btn-boss" style="padding: 12px; font-size:0.85em;">National Expo<br><span style="font-size: 0.75em; color: #fff; display:block; margin-top:4px;">10k+ Items & Prestige</span></button>
+            </div>
+            <div class="log-box" id="log-box">
+                <div class="log-entry">> Exhibition terminal active.</div>
             </div>
         </div>
     </div>
 
-    <!-- REPTILE EXPO MARKET -->
-    <div id="tab-expo" class="tab-content">
+    <div id="tab-dealer" class="tab-content">
         <div class="panel">
-            <h2>Reptile Expo Exchange</h2>
-            <p style="text-align:center; font-size:0.85em; color: var(--text); margin-top: -5px;">Supply and demand shifts rapidly. Volatility capped at 50,000%.</p>
+            <h2>Exotic Reptile Importer</h2>
+            <p style="text-align:center; font-size:0.8em; color: var(--text); margin-top: -5px; margin-bottom:8px;">The importer offers 10 rare shipments at 50% to 90% discounts. Stock refreshes every 10s.</p>
             
             <div class="timer-bar">
-                <div class="timer-fill" id="market-timer-fill"></div>
-                <div class="timer-text">Vendor Refresh: <span id="market-timer-text">10</span>s</div>
+                <div class="timer-fill" id="dealer-timer-fill" style="background: var(--cyan);"></div>
+                <div class="timer-text">Stock Refresh: <span id="dealer-timer-text">10</span>s</div>
             </div>
-            <div class="panel-scrollable" id="market-container"></div>
+            <div class="panel-scrollable" id="dealer-container"></div>
+        </div>
+    </div>
+
+    <div id="tab-odds" class="tab-content">
+        <div class="panel" style="flex: 1;">
+            <h2>The Syndicate Odds Ledger</h2>
+            <div class="panel-scrollable" style="font-size: 0.85em; color: var(--bone); line-height: 1.5;">
+                
+                <h3 style="color: var(--cyan); margin-top:0; margin-bottom: 5px;">Core Breeding Anomalies</h3>
+                <ul style="margin-top:0; padding-left: 20px;">
+                    <li><strong>Clutch Size:</strong> 3 to 6 hatchlings per incubation.</li>
+                    <li><strong>Zenith/Apex Strike:</strong> Flat 5% chance per hatchling for a T12/T13 trait.</li>
+                    <li><strong>Shiny:</strong> 1/66 (1.5%). Inverts colors, applies +3,333% value multiplier.</li>
+                    <li><strong>Shiny Inheritance:</strong> 10% chance to pass down if Sire or Dam is shiny.</li>
+                    <li><strong>Polycephaly (Twins):</strong> 1/250 (0.4%). Snake renders with 2 heads. +400% value multiplier.</li>
+                    <li><strong>Polycephaly (Hydra):</strong> 1/1000 (0.1%). Snake renders with 3 heads. +1,100% value multiplier.</li>
+                    <li><strong>Monster of God Spawn:</strong> 1/1200 (0.08%). Guaranteed 13 Top-Tier traits and +77,777% value.</li>
+                </ul>
+
+                <h3 style="color: var(--cyan); margin-top:15px; margin-bottom: 5px;">Syndicate Actions</h3>
+                <ul style="margin-top:0; padding-left: 20px;">
+                    <li><strong>Mystery Egg ($1k):</strong> Must pass three checks (90%, 85%, 80%). Overall success rate is 61.2%. If survived, guaranteed God Tier or Apex mutant.</li>
+                    <li><strong>Mutagen Mouse ($250k):</strong> 10% lethal fail rate. 90% success to force 3 to 13 Legendary+ traits.</li>
+                    <li><strong>Breeding Contracts:</strong> Haggle increases payout +15-30% but drops success rate by 10%. If chance falls below 50%, contract is voided.</li>
+                </ul>
+
+                <h3 style="color: var(--cyan); margin-top:15px; margin-bottom: 5px;">Species Value Tiers (Base Rarity Points)</h3>
+                <p style="margin-top:0; margin-bottom: 10px;">
+                    T1(100): Corn, Black Rat, Garter<br>
+                    T2(500): Ball Python, Milk, Ribbon<br>
+                    T3(1k): Boa Constrictor, Carpet Python, Hognose<br>
+                    T4(2.5k): Blood Python, Black Racer, Pine<br>
+                    T5(5k): Retic Python, Green Tree Python, Anaconda<br>
+                    T6(7.5k): Copperhead, Cottonmouth, False Water Cobra<br>
+                    T7(10k): Mangrove, Boomslang, Vine<br>
+                    T8(15k): Coral, Death Adder, Sea Snake<br>
+                    T9(20k): Rhino Viper, Eyelash Viper, Bush Viper<br>
+                    T10(25k): Gaboon Viper, Russell's Viper, Puff Adder<br>
+                    T11(30k): Spitting Cobra, Green Mamba, Blue Insularis<br>
+                    T12(40k): Black Mamba, King Cobra, Inland Taipan<br>
+                    T13(50k): Coastal Taipan, Bushmaster, Fer-de-Lance
+                </p>
+
+                <h3 style="color: var(--cyan); margin-top:15px; margin-bottom: 5px;">Trait Rarities & Multipliers</h3>
+                <ul style="margin-top:0; padding-left: 20px;">
+                    <li>1. Common (+10% | 100 Rarity Pts)</li>
+                    <li>2. Uncommon (+50% | 200 Pts)</li>
+                    <li>3. Rare (+100% | 300 Pts)</li>
+                    <li>4. Epic (+400% | 500 Pts)</li>
+                    <li>5. Legendary (+900% | 1k Pts)</li>
+                    <li>6. Mythic (+2.4k% | 2.5k Pts)</li>
+                    <li>7. Divine (+4.9k% | 5k Pts)</li>
+                    <li>8. Immortal (+9.9k% | 10k Pts)</li>
+                    <li>9. Celestial (+19k% | 15k Pts)</li>
+                    <li>10. Primordial (+34k% | 20k Pts)</li>
+                    <li>11. Monster of God (+49k% | 30k Pts)</li>
+                    <li>12. Syndicate Zenith (+149k% | 40k Pts)</li>
+                    <li>13. Apex Predator (+499k% | 50k Pts)</li>
+                </ul>
+            </div>
         </div>
     </div>
 
 </div>
 
 <script>
-    // ==========================================
-    // 1. GLOBAL VARS (CodePen Hot-Reload Safe)
-    // ==========================================
-    
-    var wallet = 0;
-    var prestige = 0;
-    var snakeRack = [];
-    var maxRack = 20; 
-    var incubatorLevel = 0; 
-    var monster = null; 
-    var legendaryArchive = [];
-    var unlockedMorphs = []; 
-    var marketTimer = 10;
-    var marketInterval = null;
-
-    var statsList = ['LIF', 'POW', 'INT', 'SKI', 'SPD', 'DEF'];
-
-    var traitAdjectives = ["Aggressive", "Heavy-Bodied", "Iridescent", "Hyper-Melanistic", "Giant", "Dwarf", "Lethal", "Striking", "Venomous", "Docile", "Robust", "Radiant"];
-    var traitNouns = ["Feeding Response", "Scale Plating", "Metabolism", "Clutch Size", "Heat Pits", "Strike Range", "Venom Glands", "Fangs", "Muscle Mass", "Immune System", "Pigmentation", "Digestion"];
-
-    var market = {
-        micePinkies: { name: "Frozen Pinky Mice", price: 5, min: 1, max: 200, owned: 0 },
-        adultMice: { name: "Adult Mice", price: 10, min: 1, max: 500, owned: 0 },
-        frozenRats: { name: "Frozen Rats", price: 25, min: 5, max: 1000, owned: 0 },
-        heatMats: { name: "Under-Tank Heat Mats", price: 50, min: 10, max: 3000, owned: 0 },
-        uvbBulbs: { name: "UVB Bulbs", price: 100, min: 20, max: 5000, owned: 0 },
-        terrariums: { name: "Glass Terrariums", price: 500, min: 100, max: 25000, owned: 0 },
-        incubators: { name: "Breeder Incubators", price: 5000, min: 1000, max: 150000, owned: 0 },
-        antivenom: { name: "Polyvalent Antivenom", price: 12000, min: 5000, max: 500000, owned: 0 }
-    };
-
-    var traitRarities = [
-        { name: "Common", color: "#8a8d91", multi: 1.1, stats: 10, chance: 100 },
-        { name: "Uncommon", color: "#43b581", multi: 1.5, stats: 25, chance: 50 },
-        { name: "Rare", color: "#7289da", multi: 2.0, stats: 50, chance: 75 },
-        { name: "Epic", color: "#ff00ff", multi: 5.0, stats: 100, chance: 88 },
-        { name: "Legendary", color: "#faa61a", multi: 10.0, stats: 250, chance: 94 },
-        { name: "Mythic", color: "#f04747", multi: 25.0, stats: 500, chance: 97 },
-        { name: "Divine", color: "#c5a059", multi: 50.0, stats: 1000, chance: 98.5 },
-        { name: "Immortal", color: "#00ffff", multi: 100.0, stats: 2500, chance: 99.2 },
-        { name: "Celestial", color: "#ffb6c1", multi: 200.0, stats: 5000, chance: 99.6 },
-        { name: "Primordial", color: "#adff2f", multi: 350.0, stats: 10000, chance: 99.8 },
-        { name: "Monster of God", color: "#ffffff", multi: 500.0, stats: 50000, chance: 99.95 }
-    ];
-
-    var morphPrefixes = ["Abyssal", "Astral", "Apex", "Celestial", "Chimera", "Eclipse", "Eldritch", "Enigma", "Helix", "Infernal", "Luminous", "Nebula", "Nova", "Obsidian", "Omega", "Oracle", "Paradox", "Phantom", "Prismatic", "Quantum", "Radiant", "Singularity", "Spectral", "Syndicate", "Titan", "Vanguard", "Vortex", "Wraith", "Xenon", "Zenith"];
-
-    var speciesPool = [
-        {name: "Ball Python", type: "Non-Venomous"},
-        {name: "Blood Python", type: "Non-Venomous"},
-        {name: "Reticulated Python", type: "Non-Venomous"},
-        {name: "Colombian Red Tail Boa", type: "Non-Venomous"},
-        {name: "Copperhead", type: "Mildly Venomous"},
-        {name: "Mangrove Snake", type: "Mildly Venomous"},
-        {name: "False Water Cobra", type: "Mildly Venomous"},
-        {name: "Blue Insularis", type: "Venomous"},
-        {name: "Gaboon Viper", type: "Venomous"},
-        {name: "King Cobra", type: "Venomous"},
-        {name: "Eastern Diamondback", type: "Venomous"}
-    ];
-
-    var masterMorphs = [
-        { name: "Normal Ball Python", base: '#3b2f2f', pattern: '#8b4513', accent: '#d2b48c' },
-        { name: "Clown", base: '#2b1d0c', pattern: '#ff8c00', accent: '#ffd700' },
-        { name: "Piebald", base: '#1a1a1a', pattern: '#ffffff', accent: '#ffb6c1' },
-        { name: "Albino", base: '#fff8dc', pattern: '#ff4500', accent: '#ff6347' },
-        { name: "Axanthic", base: '#2f4f4f', pattern: '#708090', accent: '#d3d3d3' },
-        { name: "Banana", base: '#fffacd', pattern: '#ffd700', accent: '#ff69b4' },
-        { name: "Champagne", base: '#e6c280', pattern: '#cdaa7d', accent: '#f5deb3' },
-        { name: "Cinnamon", base: '#8b5a2b', pattern: '#a0522d', accent: '#d2691e' },
-        { name: "GHI", base: '#111111', pattern: '#333333', accent: '#555555' },
-        { name: "Ghost / Hypo", base: '#708090', pattern: '#b0c4de', accent: '#e0ffff' },
-        { name: "Lavender Albino", base: '#e6e6fa', pattern: '#dda0dd', accent: '#ba55d3' },
-        { name: "Mojave", base: '#556b2f', pattern: '#8fbc8f', accent: '#bdb76b' },
-        { name: "Mystic", base: '#483d8b', pattern: '#6a5acd', accent: '#9370db' },
-        { name: "Pinstripe", base: '#5c4033', pattern: '#deb887', accent: '#f4a460' },
-        { name: "Enchi", base: '#b8860b', pattern: '#ffd700', accent: '#ff8c00' },
-        { name: "Fire", base: '#800000', pattern: '#ff4500', accent: '#ffa500' },
-        { name: "Yellow Belly", base: '#556b2f', pattern: '#eee8aa', accent: '#f0e68c' },
-        { name: "Specter", base: '#2f4f4f', pattern: '#00ced1', accent: '#40e0d0' },
-        { name: "Butter", base: '#eee8aa', pattern: '#fafad2', accent: '#fffacd' },
-        { name: "Lesser", base: '#bdb76b', pattern: '#f0e68c', accent: '#fafad2' },
-        { name: "Phantom", base: '#191970', pattern: '#483d8b', accent: '#6495ed' },
-        { name: "Spotnose", base: '#8b7355', pattern: '#deb887', accent: '#f5deb3' },
-        { name: "Super Stripe", base: '#2f4f4f', pattern: '#00fa9a', accent: '#00ff7f' },
-        { name: "Black Head", base: '#101010', pattern: '#8b0000', accent: '#ff4500' },
-        { name: "Calico", base: '#8b4513', pattern: '#ff8c00', accent: '#ffffff' },
-        { name: "Batik", base: '#4a2511', pattern: '#ff4500', accent: '#ff8c00' },
-        { name: "Golden Eye", base: '#8b0000', pattern: '#ffd700', accent: '#ffb6c1' },
-        { name: "Matrix", base: '#3b0000', pattern: '#ff0000', accent: '#ffa07a' },
-        { name: "Ivory Blood", base: '#fdf5e6', pattern: '#ffffff', accent: '#fffacd' },
-        { name: "Magpie", base: '#1a1a1a', pattern: '#ffffff', accent: '#ff0000' },
-        { name: "T+ Albino Blood", base: '#8b4513', pattern: '#ff8c00', accent: '#ffd700' },
-        { name: "Red Albino Blood", base: '#ff0000', pattern: '#ff4500', accent: '#ffefd5' },
-        { name: "Pixel", base: '#800000', pattern: '#ff8c00', accent: '#fafad2' },
-        { name: "VPI Stripe", base: '#4a2511', pattern: '#ffc0cb', accent: '#ff69b4' },
-        { name: "Super Dwarf Cow", base: '#ffffff', pattern: '#000000', accent: '#f5f5f5' },
-        { name: "Super Dwarf Opal", base: '#fff0f5', pattern: '#e6e6fa', accent: '#ffffff' },
-        { name: "Super Dwarf Anery", base: '#2f4f4f', pattern: '#708090', accent: '#a9a9a9' },
-        { name: "Super Dwarf Albino", base: '#ffffe0', pattern: '#ff4500', accent: '#ffd700' },
-        { name: "Sunfire Retic", base: '#cd5c5c', pattern: '#ff4500', accent: '#ffd700' },
-        { name: "Tiger Retic", base: '#8b4513', pattern: '#deb887', accent: '#ffd700' },
-        { name: "Golden Child", base: '#111111', pattern: '#ffd700', accent: '#b8860b' },
-        { name: "Motley Retic", base: '#8b5a2b', pattern: '#f4a460', accent: '#d2b48c' },
-        { name: "Titanium Retic", base: '#696969', pattern: '#808080', accent: '#a9a9a9' },
-        { name: "Purple Phase", base: '#dda0dd', pattern: '#800080', accent: '#ffb6c1' },
-        { name: "Platinum Retic", base: '#d3d3d3', pattern: '#f8f8ff', accent: '#ffebcd' },
-        { name: "Phantom Retic", base: '#2f4f4f', pattern: '#778899', accent: '#b0c4de' },
-        { name: "Hypo Boa", base: '#cd853f', pattern: '#d2b48c', accent: '#deb887' },
-        { name: "Anery Type 1 Boa", base: '#2f4f4f', pattern: '#708090', accent: '#c0c0c0' },
-        { name: "Kahl Albino Boa", base: '#ffefd5', pattern: '#ff4500', accent: '#ffd700' },
-        { name: "Jungle Boa", base: '#8b4513', pattern: '#000000', accent: '#f4a460' },
-        { name: "Leopard Boa", base: '#000000', pattern: '#8b4513', accent: '#d2b48c' },
-        { name: "Blood Boa", base: '#8b0000', pattern: '#b22222', accent: '#dc143c' },
-        { name: "Moonglow Boa", base: '#f8f8ff', pattern: '#ffffff', accent: '#fff0f5' },
-        { name: "Palmetto", base: '#ffffff', pattern: '#ff0000', accent: '#000000' },
-        { name: "White Sided Black Rat", base: '#111111', pattern: '#ffffff', accent: '#555555' },
-        { name: "Hypo FWC", base: '#d2b48c', pattern: '#8b4513', accent: '#deb887' },
-        { name: "Lavender FWC", base: '#e6e6fa', pattern: '#dda0dd', accent: '#d8bfd8' },
-        { name: "Melanistic FWC", base: '#1a1a1a', pattern: '#000000', accent: '#2f4f4f' },
-        { name: "Normal Copperhead", base: '#a0522d', pattern: '#cd853f', accent: '#8b4513' },
-        { name: "T+ Albino Copperhead", base: '#ffd700', pattern: '#ff8c00', accent: '#ffa500' },
-        { name: "Melanistic Copperhead", base: '#111111', pattern: '#000000', accent: '#333333' },
-        { name: "Striped Copperhead", base: '#d2b48c', pattern: '#8b4513', accent: '#cd853f' },
-        { name: "Axanthic Copperhead", base: '#696969', pattern: '#a9a9a9', accent: '#d3d3d3' },
-        { name: "Calico Copperhead", base: '#8b4513', pattern: '#ffffff', accent: '#cd853f' },
-        { name: "Yellow-Ringed Mangrove", base: '#111111', pattern: '#ffd700', accent: '#000000' },
-        { name: "White-Banded Mangrove", base: '#111111', pattern: '#ffffff', accent: '#2f4f4f' },
-        { name: "Melanistic Mangrove", base: '#000000', pattern: '#1a1a1a', accent: '#0a0a0a' },
-        { name: "High Yellow Mangrove", base: '#2b2b2b', pattern: '#ffff00', accent: '#ffd700' },
-        { name: "Blue Insularis", base: '#0000cd', pattern: '#1e90ff', accent: '#87cefa' },
-        { name: "Turquoise Insularis", base: '#008b8b', pattern: '#40e0d0', accent: '#00ffff' },
-        { name: "Purple Insularis", base: '#800080', pattern: '#da70d6', accent: '#dda0dd' },
-        { name: "Flores Green", base: '#006400', pattern: '#32cd32', accent: '#adff2f' },
-        { name: "Wetar Yellow", base: '#b8860b', pattern: '#ffd700', accent: '#ffff00' },
-        { name: "High Blue Insularis", base: '#000080', pattern: '#0000ff', accent: '#00bfff' },
-        { name: "Normal Gaboon Viper", base: '#d2b48c', pattern: '#4a2511', accent: '#2f4f4f' },
-        { name: "Albino Gaboon", base: '#ffefd5', pattern: '#ff4500', accent: '#ffd700' },
-        { name: "High Red Gaboon", base: '#b22222', pattern: '#ff0000', accent: '#ff6347' },
-        { name: "Pastel Gaboon", base: '#f5deb3', pattern: '#cd853f', accent: '#deb887' },
-        { name: "Xanthic Gaboon", base: '#bdb76b', pattern: '#ffd700', accent: '#f0e68c' },
-        { name: "Striped Gaboon", base: '#8b4513', pattern: '#d2b48c', accent: '#ffdead' },
-        { name: "Ghost Gaboon", base: '#708090', pattern: '#b0c4de', accent: '#e0ffff' },
-        { name: "Paradox Gaboon", base: '#d2b48c', pattern: '#4a2511', accent: '#ffffff' },
-        { name: "Banded King Cobra", base: '#556b2f', pattern: '#000000', accent: '#bdb76b' },
-        { name: "Leucistic King Cobra", base: '#ffffff', pattern: '#f5f5f5', accent: '#e0ffff' },
-        { name: "Malaysian Melanistic King", base: '#0a0a0a', pattern: '#000000', accent: '#111111' },
-        { name: "T- Albino King Cobra", base: '#ffffe0', pattern: '#ff4500', accent: '#ffb6c1' },
-        { name: "Golden King Cobra", base: '#b8860b', pattern: '#ffd700', accent: '#daa520' },
-        { name: "Axanthic King Cobra", base: '#696969', pattern: '#000000', accent: '#a9a9a9' },
-        { name: "Normal EDB", base: '#556b2f', pattern: '#000000', accent: '#d2b48c' },
-        { name: "Albino EDB", base: '#ffefd5', pattern: '#ff4500', accent: '#ffd700' },
-        { name: "Melanistic EDB", base: '#1a1a1a', pattern: '#000000', accent: '#2f4f4f' },
-        { name: "Hypo EDB", base: '#d2b48c', pattern: '#cd853f', accent: '#f5deb3' },
-        { name: "Lavender EDB", base: '#e6e6fa', pattern: '#dda0dd', accent: '#ba55d3' },
-        { name: "Patternless EDB", base: '#8b4513', pattern: '#8b4513', accent: '#a0522d' },
-        { name: "Calico EDB", base: '#8b4513', pattern: '#ffffff', accent: '#cd853f' },
-        { name: "Blizzard EDB", base: '#ffffff', pattern: '#f0f8ff', accent: '#e6e6fa' },
-        { name: "Marbled EDB", base: '#2f4f4f', pattern: '#8b4513', accent: '#d3d3d3' },
-        { name: "Paradox EDB", base: '#556b2f', pattern: '#000000', accent: '#ffffff' }
-    ];
+    "use strict";
 
     // ==========================================
-    // 2. CORE UTILITY & MATH FUNCTIONS
+    // 1. CORE MATH & MASSIVE NUMBER FORMATTING
     // ==========================================
-
     function xmur3(str) {
         for(var i = 0, h = 1779033703 ^ str.length; i < str.length; i++) {
             h = Math.imul(h ^ str.charCodeAt(i), 3432918353);
@@ -675,9 +736,17 @@
 
     function formatAbbrev(val) {
         if(typeof val !== 'number') val = Number(val) || 0;
-        if(val >= 1000000000) return (val/1000000000).toFixed(2) + 'B';
-        if(val >= 1000000) return (val/1000000).toFixed(2) + 'M';
-        if(val >= 1000) return (val/1000).toFixed(1) + 'k';
+        if(val >= 1e33) return (val/1e33).toFixed(2) + 'Dc';
+        if(val >= 1e30) return (val/1e30).toFixed(2) + 'No';
+        if(val >= 1e27) return (val/1e27).toFixed(2) + 'Oc';
+        if(val >= 1e24) return (val/1e24).toFixed(2) + 'Sp';
+        if(val >= 1e21) return (val/1e21).toFixed(2) + 'Sx';
+        if(val >= 1e18) return (val/1e18).toFixed(2) + 'Qi';
+        if(val >= 1e15) return (val/1e15).toFixed(2) + 'Qa';
+        if(val >= 1e12) return (val/1e12).toFixed(2) + 'T';
+        if(val >= 1e9)  return (val/1e9).toFixed(2) + 'B';
+        if(val >= 1e6)  return (val/1e6).toFixed(2) + 'M';
+        if(val >= 1e3)  return (val/1e3).toFixed(1) + 'k';
         return Math.floor(val).toLocaleString();
     }
 
@@ -690,36 +759,226 @@
         entry.innerHTML = `> <span class="${styleClass}">${msg}</span>`;
         logBox.prepend(entry);
     }
-
-    // ==========================================
-    // 3. UI TABS & NAVIGATION
-    // ==========================================
-
-    function setupTabs() {
-        document.querySelectorAll('.tab-btn').forEach(function(btn) {
-            btn.addEventListener('click', function(e) {
-                document.querySelectorAll('.tab-btn').forEach(function(b) { b.classList.remove('active'); });
-                document.querySelectorAll('.tab-content').forEach(function(c) { c.classList.remove('active'); });
-                e.target.classList.add('active');
-                var targetTab = document.getElementById(e.target.getAttribute('data-target'));
-                if(targetTab) targetTab.classList.add('active');
-            });
-        });
+    
+    function logComp(msg, styleClass) {
+        if (!styleClass) styleClass = 'highlight';
+        var logBox = document.getElementById('comp-log-box');
+        if(!logBox) return;
+        var entry = document.createElement('div');
+        entry.className = 'log-entry';
+        entry.innerHTML = `> <span class="${styleClass}">${msg}</span>`;
+        logBox.prepend(entry);
     }
 
-    window.jumpToTab = function(tabId) {
-        document.querySelectorAll('.tab-btn').forEach(function(b) { b.classList.remove('active'); });
-        document.querySelectorAll('.tab-content').forEach(function(c) { c.classList.remove('active'); });
-        var targetBtn = document.querySelector(`[data-target="${tabId}"]`);
-        var targetTab = document.getElementById(tabId);
-        if(targetBtn) targetBtn.classList.add('active');
-        if(targetTab) targetTab.classList.add('active');
+    // ==========================================
+    // 2. CONSTANTS & DATABASES
+    // ==========================================
+    var statsList = ['LIF', 'POW', 'INT', 'SKI', 'SPD', 'DEF'];
+    var traitAdjectives = ["Aggressive", "Heavy-Bodied", "Iridescent", "Hyper-Melanistic", "Giant", "Dwarf", "Lethal", "Striking", "Venomous", "Docile", "Robust", "Radiant"];
+    var traitNouns = ["Feeding Response", "Scale Plating", "Metabolism", "Clutch Size", "Heat Pits", "Strike Range", "Venom Glands", "Fangs", "Muscle Mass", "Immune System", "Pigmentation", "Digestion"];
+
+    var traitRarities = [
+        { name: "Common", color: "#8a8d91", multi: 1.1, stats: 10, chance: 100, tier: 1, pts: 100 },
+        { name: "Uncommon", color: "#43b581", multi: 1.5, stats: 25, chance: 50, tier: 2, pts: 200 },
+        { name: "Rare", color: "#7289da", multi: 2.0, stats: 50, chance: 75, tier: 3, pts: 300 },
+        { name: "Epic", color: "#ff00ff", multi: 5.0, stats: 100, chance: 88, tier: 4, pts: 500 },
+        { name: "Legendary", color: "#faa61a", multi: 10.0, stats: 250, chance: 94, tier: 5, pts: 1000 },
+        { name: "Mythic", color: "#f04747", multi: 25.0, stats: 500, chance: 97, tier: 6, pts: 2500 },
+        { name: "Divine", color: "#c5a059", multi: 50.0, stats: 1000, chance: 98.5, tier: 7, pts: 5000 },
+        { name: "Immortal", color: "#00ffff", multi: 100.0, stats: 2500, chance: 99.2, tier: 8, pts: 10000 },
+        { name: "Celestial", color: "#ffb6c1", multi: 200.0, stats: 5000, chance: 99.6, tier: 9, pts: 15000 },
+        { name: "Primordial", color: "#adff2f", multi: 350.0, stats: 10000, chance: 99.8, tier: 10, pts: 20000 },
+        { name: "Monster of God", color: "#ffffff", multi: 500.0, stats: 50000, chance: 99.95, tier: 11, pts: 30000 },
+        { name: "Syndicate Zenith", color: "#ff00ff", multi: 1500.0, stats: 150000, chance: 99.98, tier: 12, pts: 40000 },
+        { name: "Apex Predator", color: "#ff0000", multi: 5000.0, stats: 500000, chance: 99.99, tier: 13, pts: 50000 }
+    ];
+
+    var morphPrefixes = ["Abyssal", "Astral", "Apex", "Celestial", "Chimera", "Eclipse", "Eldritch", "Enigma", "Helix", "Infernal", "Luminous", "Nebula", "Nova", "Obsidian", "Omega", "Oracle", "Paradox", "Phantom", "Prismatic", "Quantum", "Radiant", "Singularity", "Spectral", "Syndicate", "Titan", "Vanguard", "Vortex", "Wraith", "Xenon", "Zenith"];
+
+    var speciesPool = [
+        {name: "Corn Snake", type: "Non-Venomous", baseVal: 100, tier: 1, pts: 100},
+        {name: "Black Rat Snake", type: "Non-Venomous", baseVal: 100, tier: 1, pts: 100},
+        {name: "Garter Snake", type: "Non-Venomous", baseVal: 100, tier: 1, pts: 100},
+        {name: "Ball Python", type: "Non-Venomous", baseVal: 250, tier: 2, pts: 500},
+        {name: "Milk Snake", type: "Non-Venomous", baseVal: 250, tier: 2, pts: 500},
+        {name: "Ribbon Snake", type: "Non-Venomous", baseVal: 250, tier: 2, pts: 500},
+        {name: "Boa Constrictor", type: "Non-Venomous", baseVal: 500, tier: 3, pts: 1000},
+        {name: "Carpet Python", type: "Non-Venomous", baseVal: 500, tier: 3, pts: 1000},
+        {name: "Hognose Snake", type: "Mildly Venomous", baseVal: 500, tier: 3, pts: 1000},
+        {name: "Blood Python", type: "Non-Venomous", baseVal: 1000, tier: 4, pts: 2500},
+        {name: "Black Racer", type: "Non-Venomous", baseVal: 1000, tier: 4, pts: 2500},
+        {name: "Pine Snake", type: "Non-Venomous", baseVal: 1000, tier: 4, pts: 2500},
+        {name: "Reticulated Python", type: "Non-Venomous", baseVal: 2500, tier: 5, pts: 5000},
+        {name: "Green Tree Python", type: "Non-Venomous", baseVal: 2500, tier: 5, pts: 5000},
+        {name: "Green Anaconda", type: "Non-Venomous", baseVal: 2500, tier: 5, pts: 5000},
+        {name: "Copperhead", type: "Mildly Venomous", baseVal: 5000, tier: 6, pts: 7500},
+        {name: "Cottonmouth", type: "Venomous", baseVal: 5000, tier: 6, pts: 7500},
+        {name: "False Water Cobra", type: "Mildly Venomous", baseVal: 5000, tier: 6, pts: 7500},
+        {name: "Mangrove Snake", type: "Mildly Venomous", baseVal: 10000, tier: 7, pts: 10000},
+        {name: "Boomslang", type: "Venomous", baseVal: 10000, tier: 7, pts: 10000},
+        {name: "Vine Snake", type: "Mildly Venomous", baseVal: 10000, tier: 7, pts: 10000},
+        {name: "Coral Snake", type: "Venomous", baseVal: 25000, tier: 8, pts: 15000},
+        {name: "Death Adder", type: "Venomous", baseVal: 25000, tier: 8, pts: 15000},
+        {name: "Sea Snake", type: "Venomous", baseVal: 25000, tier: 8, pts: 15000},
+        {name: "Rhino Viper", type: "Venomous", baseVal: 50000, tier: 9, pts: 20000},
+        {name: "Eyelash Viper", type: "Venomous", baseVal: 50000, tier: 9, pts: 20000},
+        {name: "Bush Viper", type: "Venomous", baseVal: 50000, tier: 9, pts: 20000},
+        {name: "Gaboon Viper", type: "Venomous", baseVal: 100000, tier: 10, pts: 25000},
+        {name: "Russell's Viper", type: "Venomous", baseVal: 100000, tier: 10, pts: 25000},
+        {name: "Puff Adder", type: "Venomous", baseVal: 100000, tier: 10, pts: 25000},
+        {name: "Spitting Cobra", type: "Venomous", baseVal: 250000, tier: 11, pts: 30000},
+        {name: "Green Mamba", type: "Venomous", baseVal: 250000, tier: 11, pts: 30000},
+        {name: "Blue Insularis", type: "Venomous", baseVal: 250000, tier: 11, pts: 30000},
+        {name: "Black Mamba", type: "Venomous", baseVal: 1000000, tier: 12, pts: 40000},
+        {name: "King Cobra", type: "Venomous", baseVal: 1000000, tier: 12, pts: 40000},
+        {name: "Inland Taipan", type: "Venomous", baseVal: 1000000, tier: 12, pts: 40000},
+        {name: "Coastal Taipan", type: "Venomous", baseVal: 5000000, tier: 13, pts: 50000},
+        {name: "Bushmaster", type: "Venomous", baseVal: 5000000, tier: 13, pts: 50000},
+        {name: "Fer-de-Lance", type: "Venomous", baseVal: 5000000, tier: 13, pts: 50000}
+    ];
+
+    var masterMorphs = [
+        { name: "Normal Ball Python", base: '#3b2f2f', pattern: '#8b4513', accent: '#d2b48c' },
+        { name: "Clown", base: '#2b1d0c', pattern: '#ff8c00', accent: '#ffd700' },
+        { name: "Piebald", base: '#1a1a1a', pattern: '#ffffff', accent: '#ffb6c1' },
+        { name: "Albino", base: '#fff8dc', pattern: '#ff4500', accent: '#ff6347' },
+        { name: "Axanthic", base: '#2f4f4f', pattern: '#708090', accent: '#d3d3d3' },
+        { name: "Banana", base: '#fffacd', pattern: '#ffd700', accent: '#ff69b4' },
+        { name: "GHI", base: '#111111', pattern: '#333333', accent: '#555555' },
+        { name: "Lavender Albino", base: '#e6e6fa', pattern: '#dda0dd', accent: '#ba55d3' },
+        { name: "Mojave", base: '#556b2f', pattern: '#8fbc8f', accent: '#bdb76b' },
+        { name: "Pinstripe", base: '#5c4033', pattern: '#deb887', accent: '#f4a460' },
+        { name: "Enchi", base: '#b8860b', pattern: '#ffd700', accent: '#ff8c00' },
+        { name: "Specter", base: '#2f4f4f', pattern: '#00ced1', accent: '#40e0d0' },
+        { name: "Calico", base: '#8b4513', pattern: '#ff8c00', accent: '#ffffff' },
+        { name: "Batik", base: '#4a2511', pattern: '#ff4500', accent: '#ff8c00' },
+        { name: "Golden Eye", base: '#8b0000', pattern: '#ffd700', accent: '#ffb6c1' },
+        { name: "Matrix", base: '#3b0000', pattern: '#ff0000', accent: '#ffa07a' },
+        { name: "Ivory Blood", base: '#fdf5e6', pattern: '#ffffff', accent: '#fffacd' },
+        { name: "Magpie", base: '#1a1a1a', pattern: '#ffffff', accent: '#ff0000' },
+        { name: "T+ Albino Blood", base: '#8b4513', pattern: '#ff8c00', accent: '#ffd700' },
+        { name: "Red Albino Blood", base: '#ff0000', pattern: '#ff4500', accent: '#ffefd5' },
+        { name: "Super Dwarf Cow", base: '#ffffff', pattern: '#000000', accent: '#f5f5f5' },
+        { name: "Tiger Retic", base: '#8b4513', pattern: '#deb887', accent: '#ffd700' },
+        { name: "Golden Child", base: '#111111', pattern: '#ffd700', accent: '#b8860b' },
+        { name: "Titanium Retic", base: '#696969', pattern: '#808080', accent: '#a9a9a9' },
+        { name: "Platinum Retic", base: '#d3d3d3', pattern: '#f8f8ff', accent: '#ffebcd' },
+        { name: "Phantom Retic", base: '#2f4f4f', pattern: '#778899', accent: '#b0c4de' },
+        { name: "Hypo Boa", base: '#cd853f', pattern: '#d2b48c', accent: '#deb887' },
+        { name: "Anery Type 1 Boa", base: '#2f4f4f', pattern: '#708090', accent: '#c0c0c0' },
+        { name: "Kahl Albino Boa", base: '#ffefd5', pattern: '#ff4500', accent: '#ffd700' },
+        { name: "Jungle Boa", base: '#8b4513', pattern: '#000000', accent: '#f4a460' },
+        { name: "Leopard Boa", base: '#000000', pattern: '#8b4513', accent: '#d2b48c' },
+        { name: "Blood Boa", base: '#8b0000', pattern: '#b22222', accent: '#dc143c' },
+        { name: "Moonglow Boa", base: '#f8f8ff', pattern: '#ffffff', accent: '#fff0f5' },
+        { name: "Palmetto", base: '#ffffff', pattern: '#ff0000', accent: '#000000' },
+        { name: "Normal Copperhead", base: '#a0522d', pattern: '#cd853f', accent: '#8b4513' },
+        { name: "Blue Insularis", base: '#0000cd', pattern: '#1e90ff', accent: '#87cefa' },
+        { name: "Normal Gaboon Viper", base: '#d2b48c', pattern: '#4a2511', accent: '#2f4f4f' },
+        { name: "Normal EDB", base: '#556b2f', pattern: '#000000', accent: '#d2b48c' },
+        { name: "Doomscale", base: '#0a0a0a', pattern: '#111111', accent: '#8b0000' },
+        { name: "Blood Curse", base: '#4a0404', pattern: '#000000', accent: '#722f37' },
+        { name: "Hellspawn", base: '#36454f', pattern: '#ff4500', accent: '#ff0000' },
+        { name: "Grimfang", base: '#535c68', pattern: '#111111', accent: '#2f3640' },
+        { name: "Soulblight", base: '#000000', pattern: '#dcdcdc', accent: '#9acd32' },
+        { name: "Dark Reign", base: '#4b0082', pattern: '#000000', accent: '#a9a9a9' },
+        { name: "Ruinborn", base: '#b0c4de', pattern: '#8b4513', accent: '#000000' },
+        { name: "Flesh Eater", base: '#5c4033', pattern: '#8b0000', accent: '#fffff0' },
+        { name: "Doomveil", base: '#1a1a1a', pattern: '#696969', accent: '#a9a9a9' },
+        { name: "Sinister", base: '#000000', pattern: '#8a2be2', accent: '#dc143c' },
+        { name: "Rotfang", base: '#556b2f', pattern: '#8b4513', accent: '#ffff00' },
+        { name: "Devilskin", base: '#dc143c', pattern: '#0f0f0f', accent: '#000000' },
+        { name: "Deathmark", base: '#0a0a0a', pattern: '#fffff0', accent: '#ffffff' },
+        { name: "Malice", base: '#006400', pattern: '#000000', accent: '#cc3300' },
+        { name: "Blood Wraith", base: '#d3d3d3', pattern: '#000000', accent: '#8b0000' },
+        { name: "Hellhound", base: '#0a0a0a', pattern: '#b7410e', accent: '#cc5500' },
+        { name: "Dreadlord", base: '#111111', pattern: '#2f4f4f', accent: '#7851a9' },
+        { name: "Grave Mist", base: '#708090', pattern: '#ffffff', accent: '#36454f' },
+        { name: "Ebon Curse", base: '#050505', pattern: '#111111', accent: '#4682b4' },
+        { name: "Apocalypse", base: '#2b0000', pattern: '#ff4500', accent: '#ffd700' },
+        { name: "Anubis", base: '#111111', pattern: '#ffd700', accent: '#cd7f32' },
+        { name: "Osiris", base: '#006400', pattern: '#000000', accent: '#ffd700' },
+        { name: "Hel", base: '#000000', pattern: '#ffffff', accent: '#f5f5f5' },
+        { name: "Thanatos", base: '#1a1a1a', pattern: '#c0c0c0', accent: '#dcdcdc' },
+        { name: "Hades", base: '#0f0f0f', pattern: '#301934', accent: '#ff4500' },
+        { name: "Mictlán", base: '#111111', pattern: '#f5f5dc', accent: '#40e0d0' },
+        { name: "Ah Puch", base: '#f5f5dc', pattern: '#000000', accent: '#dc143c' },
+        { name: "Yama", base: '#0a0a0a', pattern: '#dc143c', accent: '#ffd700' },
+        { name: "Kali", base: '#191970', pattern: '#000000', accent: '#dc143c' },
+        { name: "Ereshkigal", base: '#050505', pattern: '#2a52be', accent: '#8b0000' },
+        { name: "Mot", base: '#d2b48c', pattern: '#000000', accent: '#8b0000' },
+        { name: "Nergal", base: '#111111', pattern: '#cd7f32', accent: '#dc143c' },
+        { name: "Morrígan", base: '#0a0a0a', pattern: '#483d8b', accent: '#dc143c' },
+        { name: "Chernobog", base: '#000000', pattern: '#36454f', accent: '#a9a9a9' },
+        { name: "Veles", base: '#050505', pattern: '#228b22', accent: '#8b4513' },
+        { name: "Supay", base: '#111111', pattern: '#b87333', accent: '#dc143c' },
+        { name: "Baron Samedi", base: '#000000', pattern: '#ffffff', accent: '#800080' },
+        { name: "Izumō", base: '#1a1a1a', pattern: '#ffffff', accent: '#dc143c' },
+        { name: "Erlik", base: '#050505', pattern: '#8b0000', accent: '#808080' },
+        { name: "Scourgebringer", base: '#2f4f4f', pattern: '#32cd32', accent: '#8b0000' },
+        { name: "Hellfroze", base: '#00ffff', pattern: '#00008b', accent: '#ffffff' },
+        { name: "Toxic", base: '#32cd32', pattern: '#000000', accent: '#adff2f' },
+        { name: "Plagueridden", base: '#808000', pattern: '#8b4513', accent: '#9acd32' },
+        { name: "Tiffany Blue", base: '#81d8d0', pattern: '#ffffff', accent: '#000000' },
+        { name: "Plum Crazy Purple", base: '#5a189a', pattern: '#10002b', accent: '#9d4edd' },
+        { name: "Vantablack", base: '#050505', pattern: '#000000', accent: '#0a0a0a' },
+        { name: "Nightwalker", base: '#000022', pattern: '#000000', accent: '#4444ff' }
+    ];
+
+    var godMorphs = [
+        { name: "Jörmungandr", base: "#000000", pattern: "#00ffcc", accent: "#ffffff" },
+        { name: "Ouroboros", base: "#111111", pattern: "#ff00ff", accent: "#00ffff" },
+        { name: "Quetzalcoatl", base: "#ffd700", pattern: "#32cd32", accent: "#ff0000" },
+        { name: "Leviathan", base: "#00008b", pattern: "#00ffff", accent: "#ffffff" },
+        { name: "Apep", base: "#8b0000", pattern: "#000000", accent: "#ff8c00" }
+    ];
+
+    var market = {
+        micePinkies: { name: "Frozen Pinky Mice", price: 5, min: 1, max: 200, owned: 0 },
+        adultMice: { name: "Adult Mice", price: 10, min: 1, max: 500, owned: 0 },
+        frozenRats: { name: "Frozen Rats", price: 25, min: 5, max: 1000, owned: 0 },
+        heatMats: { name: "Under-Tank Heat Mats", price: 50, min: 10, max: 3000, owned: 0 },
+        uvbBulbs: { name: "UVB Bulbs", price: 100, min: 20, max: 5000, owned: 0 },
+        terrariums: { name: "Glass Terrariums", price: 500, min: 100, max: 25000, owned: 0 },
+        incubators: { name: "Breeder Incubators", price: 5000, min: 1000, max: 150000, owned: 0 },
+        antivenom: { name: "Polyvalent Antivenom", price: 12000, min: 5000, max: 500000, owned: 0 }
     };
 
     // ==========================================
-    // 4. GENETICS, COLORS & GENERATION
+    // 3. GLOBAL VARIABLES
     // ==========================================
+    var wallet = 0;
+    var bankAccount = 0; 
+    var prestige = 0;
+    var snakeRack = [];
+    var maxRack = 100; 
+    var incubatorLevel = 0; 
+    var incubatorTotalBonus = 0; 
+    var monster = null; 
+    var legendaryArchive = [];
+    var unlockedMorphs = []; 
+    var hybridMilestones = 0;
+    var globalComboBuff = 0;
+    
+    var dealerTimer = 30;
+    var dealerInterval = null;
+    var dealerStock = [];
+    
+    var autoHatchActive = false;
+    var autoHatchTimer = null;
+    var incubating = false; 
 
+    var autoBreedActive = false;
+    
+    var contractTimer = 60;
+    var activeRentals = [];
+    var zooLog = [];
+    var breedingContracts = [];
+    var compCooldown = 0;
+
+    // ==========================================
+    // 4. LOGIC FUNCTIONS
+    // ==========================================
     function hexToRgb(hex) {
         var c = hex.substring(1).split('');
         if(c.length === 3) c = [c[0], c[0], c[1], c[1], c[2], c[2]];
@@ -731,14 +990,16 @@
         return "#" + (1 << 24 | r << 16 | g << 8 | b).toString(16).slice(1);
     }
 
-    function getBlendedPalette(dnaString) {
+    function getBlendedPalette(dnaString, isShiny) {
         if(!dnaString) return { base: '#3b2f2f', pattern: '#8b4513', accent: '#d2b48c' };
-        var bases = dnaString.replace(/\[\vert{}\]/g, "").split(' x ');
+        var bases = dnaString.replace(/\[|\]/g, "").split(' x ');
         var tRb=0, tGb=0, tBb=0, tRp=0, tGp=0, tBp=0, tRa=0, tGa=0, tBa=0;
 
         bases.forEach(function(gene) {
             var cleanName = gene.replace("Inverted ", "").trim();
-            var m = masterMorphs.find(function(x) { return x.name === cleanName; }) || masterMorphs[0];
+            var m = masterMorphs.find(function(x) { return x.name === cleanName; });
+            if(!m) m = godMorphs.find(function(x) { return x.name === cleanName; });
+            if(!m) m = masterMorphs[0];
 
             var bRGB = hexToRgb(m.base);
             var pRGB = hexToRgb(m.pattern);
@@ -750,53 +1011,70 @@
         });
 
         var len = Math.max(1, bases.length);
-        return {
-            base: rgbToHex(Math.floor(tRb/len), Math.floor(tGb/len), Math.floor(tBb/len)),
-            pattern: rgbToHex(Math.floor(tRp/len), Math.floor(tGp/len), Math.floor(tBp/len)),
-            accent: rgbToHex(Math.floor(tRa/len), Math.floor(tGa/len), Math.floor(tBa/len))
-        };
+        
+        var fBase = rgbToHex(Math.floor(tRb/len), Math.floor(tGb/len), Math.floor(tBb/len));
+        var fPattern = rgbToHex(Math.floor(tRp/len), Math.floor(tGp/len), Math.floor(tBp/len));
+        var fAccent = rgbToHex(Math.floor(tRa/len), Math.floor(tGa/len), Math.floor(tBa/len));
+
+        if(isShiny) {
+            var temp = fBase;
+            fBase = fAccent;
+            fAccent = temp;
+        }
+
+        return { base: fBase, pattern: fPattern, accent: fAccent };
     }
 
-    function generateDisplayName(dnaString) {
-        var rawBases = dnaString.replace(/\[\vert{}\]/g, "").split(' x ');
+    function getDisplayNameAndSuperColor(dnaString) {
+        var rawBases = dnaString.replace(/\[|\]/g, "").split(' x ');
         var uniqueBases = Array.from(new Set(rawBases));
         
         if (uniqueBases.length === 1) {
-            if (rawBases.length === 1) return `[${rawBases[0]}]`;
-            return `[Super ${uniqueBases[0].replace("Inverted ", "")}]`;
-        }
-        if (uniqueBases.length === 2) {
-            return `[${uniqueBases[0]} x ${uniqueBases[1]}]`;
+            var count = rawBases.length;
+            var baseName = uniqueBases[0].replace("Inverted ", "");
+            
+            if (count === 1) return { name: `[${rawBases[0]}]`, color: null };
+            if (count === 2) return { name: `[Super ${baseName}]`, color: '#ffd700' }; 
+            if (count === 3) return { name: `[Super 2 ${baseName}]`, color: '#ffea00' }; 
+            if (count === 4) return { name: `[Super 3 ${baseName}]`, color: '#ff8c00' }; 
+            if (count === 5) return { name: `[Super God ${baseName}]`, color: '#ff0000' }; 
+            if (count === 6) return { name: `[Super Blue ${baseName}]`, color: '#00e5ff' }; 
+            return { name: `[Ultra ${baseName}]`, color: '#ffffff' }; 
         }
         
         var sortedBases = [...uniqueBases].sort().join("");
         var hash = xmur3(sortedBases)();
         var prefix = morphPrefixes[hash % morphPrefixes.length];
         
-        return `[${prefix} ${uniqueBases.length}-Gene Hybrid]`;
+        return { name: `[${prefix} ${uniqueBases.length}-Gene Hybrid]`, color: null };
     }
 
     function calculateBaseValue(snakeObj) {
         if(!snakeObj) return 0;
-        var baseValue = 100;
-        if(snakeObj.type === "Mildly Venomous") baseValue = 5000;
-        if(snakeObj.type === "Venomous") baseValue = 15000;
+        
+        var speciesDef = speciesPool.find(s => s.name === snakeObj.species);
+        var baseValue = speciesDef ? speciesDef.baseVal : 100;
 
         var totalStats = statsList.reduce(function(acc, s) { return acc + (snakeObj[s] || 0); }, 0);
         baseValue += totalStats * 20;
 
         if(snakeObj.dna) {
-            var uniqueBases = new Set(snakeObj.dna.replace(/\[\vert{}\]/g, "").split(' x '));
+            var uniqueBases = new Set(snakeObj.dna.replace(/\[|\]/g, "").split(' x '));
             var numGenes = uniqueBases.size;
             
             if (numGenes === 2) baseValue *= 5;
             else if (numGenes === 3) baseValue *= 20;
             else if (numGenes === 4) baseValue *= 100;
             else if (numGenes >= 5) baseValue *= 500;
-
-            if(snakeObj.dna.includes('Inverted')) baseValue *= 2; 
         }
-        return baseValue;
+
+        if(snakeObj.isShiny) baseValue *= 34.33; 
+        if(snakeObj.heads === 2) baseValue *= 5; 
+        if(snakeObj.heads === 3) baseValue *= 12; 
+        if(snakeObj.isGodTier) baseValue *= 778.77; 
+
+        let pMulti = 1 + (prestige * 0.5) + globalComboBuff;
+        return baseValue * pMulti;
     }
 
     function calculateTotalValue(snakeObj) {
@@ -812,20 +1090,174 @@
         return snakeObj.value;
     }
 
-    function generatePortrait(seedString, dnaString, speciesType) {
+    function calculateRarityScore(snakeObj) {
+        if(!snakeObj) return 0;
+        var speciesDef = speciesPool.find(s => s.name === snakeObj.species);
+        var score = speciesDef ? speciesDef.pts : 100;
+        
+        if(snakeObj.augments) {
+            snakeObj.augments.forEach(function(t) { score += t.pts; });
+        }
+        
+        if(snakeObj.isShiny) score += 10000;
+        if(snakeObj.heads === 2) score += 5000;
+        if(snakeObj.heads === 3) score += 15000;
+        if(snakeObj.isGodTier) score += 50000;
+
+        snakeObj.rarityScore = score;
+        return score;
+    }
+
+    function getInheritedTraits(parentObj) {
+        if (!parentObj || !parentObj.augments || parentObj.augments.length === 0) return [];
+        var sorted = [...parentObj.augments].sort((a, b) => b.multi - a.multi);
+        var top3 = sorted.slice(0, 3);
+        top3.sort(() => 0.5 - Math.random());
+        return top3.slice(0, 2);
+    }
+
+    function buildSnakeObject(codeInput, dnaString, parentHeritage, inheritedTraits = [], forceGodTier = false, forceShiny = false) {
+        var seedHash = xmur3(codeInput)();
+        var rand = mulberry32(seedHash);
+        var sObj = speciesPool[Math.floor(rand() * speciesPool.length)];
+
+        var finalDna = dnaString;
+        var isGodTier = forceGodTier;
+
+        if (!finalDna && !isGodTier && rand() < (1/1200)) {
+            isGodTier = true;
+            var godObj = godMorphs[Math.floor(rand() * godMorphs.length)];
+            finalDna = godObj.name;
+        } else if (!finalDna) {
+            var mObj = masterMorphs[Math.floor(rand() * masterMorphs.length)];
+            finalDna = mObj.name;
+        }
+
+        var nameObj = getDisplayNameAndSuperColor(finalDna);
+        var displayName = nameObj.name;
+        var superColor = nameObj.color;
+        
+        if(isGodTier) displayName = `👑 ${displayName} [MONSTER OF GOD] 👑`;
+
+        var isShiny = forceShiny || (rand() < (1/66));
+        if(isShiny) displayName = `✨ ${displayName} [SHINY] ✨`;
+
+        var rHead = rand();
+        var heads = 1;
+        if (rHead < 0.001) { heads = 3; displayName = `☘️ ${displayName} [HYDRA]`; }
+        else if (rHead < 0.004) { heads = 2; displayName = `♊ ${displayName} [TWIN-HEAD]`; }
+
+        var incBonus = Math.floor(25 * Math.pow(1.2, incubatorLevel)); 
+
+        var newSnake = {
+            seed: codeInput,
+            hatchTime: Date.now() + Math.floor(Math.random() * 1000), 
+            species: sObj.name,
+            type: sObj.type,
+            dna: finalDna,
+            variantName: displayName,
+            superColor: superColor,
+            parents: parentHeritage || "Foundation Stock",
+            isShiny: isShiny,
+            isGodTier: isGodTier,
+            heads: heads,
+            isRented: false,
+            augments: [],
+            LIF: Math.floor(rand() * 100) + 20 + incubatorTotalBonus,
+            POW: Math.floor(rand() * 100) + 20 + incubatorTotalBonus,
+            INT: Math.floor(rand() * 100) + 20 + incubatorTotalBonus,
+            SKI: Math.floor(rand() * 100) + 20 + incubatorTotalBonus,
+            SPD: Math.floor(rand() * 100) + 20 + incubatorTotalBonus,
+            DEF: Math.floor(rand() * 100) + 20 + incubatorTotalBonus
+        };
+
+        if(inheritedTraits && inheritedTraits.length > 0) {
+            inheritedTraits.forEach(function(t) {
+                newSnake.augments.push(JSON.parse(JSON.stringify(t)));
+            });
+        }
+
+        var baseVal = calculateBaseValue(newSnake);
+        var numTraits = Math.floor(rand() * 10) + 1;
+        var availableRarities = traitRarities.filter(function(r) { return r.name !== "Monster of God" || baseVal > 250000; });
+        
+        var isNightwalker = newSnake.dna.includes("Nightwalker");
+        if (isNightwalker) numTraits = 10; 
+
+        if (isGodTier) {
+            numTraits = 13;
+        }
+
+        var forceAnomaly = (!isGodTier && rand() < 0.05);
+
+        for(var i=0; i < numTraits; i++) {
+            var selectedRarity = availableRarities[0];
+            
+            if (isGodTier) {
+                var highTiersG = traitRarities.filter(function(r) { return r.tier >= 11; }); 
+                selectedRarity = highTiersG[Math.floor(rand() * highTiersG.length)];
+            } else if (isNightwalker) {
+                if (rand() < 0.3) { 
+                    selectedRarity = traitRarities.find(function(r) { return r.name === "Monster of God"; });
+                } else {
+                    var highTiersN = traitRarities.slice(-5);
+                    selectedRarity = highTiersN[Math.floor(rand() * highTiersN.length)];
+                }
+            } else if (forceAnomaly && i === 0) {
+                selectedRarity = traitRarities[traitRarities.length - Math.floor(Math.random() * 2) - 1]; 
+            } else {
+                var roll = rand() * 100;
+                for (var j = availableRarities.length - 1; j >= 0; j--) {
+                    if (roll >= availableRarities[j].chance) {
+                        selectedRarity = availableRarities[j];
+                        break;
+                    }
+                }
+            }
+
+            var adj = traitAdjectives[Math.floor(rand() * traitAdjectives.length)];
+            var noun = traitNouns[Math.floor(rand() * traitNouns.length)];
+            
+            var newTrait = {
+                name: `${selectedRarity.name} Trait: ${adj} ${noun}`,
+                color: selectedRarity.color,
+                multi: selectedRarity.multi,
+                tier: selectedRarity.tier,
+                pts: selectedRarity.pts,
+                bonuses: {}
+            };
+            
+            var availableStats = [...statsList];
+            for(var k=0; k < 3; k++) {
+                var s = availableStats[Math.floor(rand() * availableStats.length)];
+                if(!newTrait.bonuses[s]) newTrait.bonuses[s] = 0;
+                newTrait.bonuses[s] += Math.floor(selectedRarity.stats * (0.8 + rand()*0.4));
+            }
+            newSnake.augments.push(newTrait);
+        }
+
+        calculateTotalValue(newSnake);
+        calculateRarityScore(newSnake);
+        return newSnake;
+    }
+
+    function generatePortrait(seedString, dnaString, speciesType, isShiny, superColor, headCount) {
+        if(!headCount) headCount = 1;
         var hash = xmur3(seedString)();
         var rand = mulberry32(hash);
         var canvas = document.getElementById('monster-canvas');
+        var container = document.getElementById('portrait-container');
         if(!canvas) return;
         var ctx = canvas.getContext('2d');
-        var size = 192; 
         
-        var morphPalette = getBlendedPalette(dnaString);
-
+        var size = 64; 
+        var scale = 3; 
+        
+        var morphPalette = getBlendedPalette(dnaString, isShiny);
         ctx.clearRect(0, 0, canvas.width, canvas.height);
+        
         var mask = Array(size).fill().map(() => Array(size).fill(false));
         var grid = Array(size).fill().map(() => Array(size).fill(0));
-        var cx = size / 2;
         
         var profile = [];
         if (speciesType === "Non-Venomous") {
@@ -836,23 +1268,31 @@
             profile = [ [20, 5], [40, 25], [70, 35], [110, 50], [140, 85], [160, 90], [180, 50], [191, 30] ];
         }
 
-        for(var y = 0; y < size; y++) {
-            var targetWidth = 0;
-            for(var i=0; i<profile.length-1; i++) {
-                var p1 = profile[i];
-                var p2 = profile[i+1];
-                if(y >= p1[0] && y <= p2[0]) {
-                    var t = (y - p1[0]) / (p2[0] - p1[0]);
-                    targetWidth = p1[1] + t * (p2[1] - p1[1]);
-                    break;
+        var headCenters = [size/2];
+        if(headCount === 2) headCenters = [size*0.35, size*0.65];
+        if(headCount === 3) headCenters = [size*0.25, size*0.5, size*0.75];
+
+        headCenters.forEach(function(cx) {
+            for(var y = 0; y < size; y++) {
+                var targetWidth = 0;
+                for(var i=0; i<profile.length-1; i++) {
+                    var p1 = profile[i];
+                    var p2 = profile[i+1];
+                    if(y >= p1[0] && y <= p2[0]) {
+                        var t = (y - p1[0]) / (p2[0] - p1[0]);
+                        targetWidth = p1[1] + t * (p2[1] - p1[1]);
+                        if(headCount === 2) targetWidth *= 0.6;
+                        if(headCount === 3) targetWidth *= 0.45;
+                        break;
+                    }
+                }
+                if(targetWidth > 0) {
+                    for(var x = Math.floor(cx - targetWidth); x <= Math.ceil(cx + targetWidth); x++) {
+                        if(x >= 0 && x < size) mask[y][x] = true;
+                    }
                 }
             }
-            if(targetWidth > 0) {
-                for(var x = Math.floor(cx - targetWidth); x <= Math.ceil(cx + targetWidth); x++) {
-                    mask[y][x] = true;
-                }
-            }
-        }
+        });
 
         for (var y2 = 0; y2 < size; y2++) {
             for (var x2 = 0; x2 < size; x2++) {
@@ -914,7 +1354,7 @@
                     else if(finalGrid[y5][x5] === 2) ctx.fillStyle = morphPalette.pattern;
                     else if(finalGrid[y5][x5] === 3) ctx.fillStyle = morphPalette.accent;
                     else if(finalGrid[y5][x5] === 4) ctx.fillStyle = "#000000"; 
-                    ctx.fillRect(x5, y5, 1, 1); 
+                    ctx.fillRect(x5 * scale, y5 * scale, scale, scale); 
                 }
             }
         }
@@ -922,115 +1362,424 @@
         var placeholder = document.getElementById('portrait-placeholder');
         if(placeholder) placeholder.style.display = 'none';
         canvas.style.display = 'block';
+
+        if(superColor && container) {
+            container.style.border = `4px solid ${superColor}`;
+            container.style.boxShadow = `0 0 15px ${superColor}, inset 0 0 10px ${superColor}`;
+        } else if (container) {
+            container.style.border = `2px solid var(--border)`;
+            container.style.boxShadow = `3px 3px 0px var(--cyan)`;
+        }
     }
 
-    function generateSnake(codeInput, dnaString, parentHeritage) {
-        if(snakeRack.length >= maxRack) {
-            alert("Racks are full! Sell a snake to make room or expand storage.");
-            return;
+    function drawSmallPortrait(ctx, seedString, dnaString, speciesType, isShiny, headCount) {
+        if(!headCount) headCount = 1;
+        var hash = xmur3(seedString)();
+        var rand = mulberry32(hash);
+        var size = 64;
+        var morphPalette = getBlendedPalette(dnaString, isShiny);
+
+        ctx.clearRect(0, 0, size, size);
+        var mask = Array(size).fill().map(() => Array(size).fill(false));
+        var grid = Array(size).fill().map(() => Array(size).fill(0));
+        
+        var profile = [];
+        if (speciesType === "Non-Venomous") {
+            profile = [ [10, 0], [13, 6], [20, 11], [30, 15], [40, 16], [50, 13], [60, 8], [63, 8] ];
+        } else if (speciesType === "Mildly Venomous") {
+            profile = [ [6, 0], [13, 5], [23, 8], [33, 20], [46, 23], [56, 11], [63, 6] ];
+        } else {
+            profile = [ [6, 2], [13, 8], [23, 11], [36, 16], [46, 28], [53, 30], [60, 16], [63, 10] ];
         }
 
-        var seedHash = xmur3(codeInput)();
-        var rand = mulberry32(seedHash);
-        var sObj = speciesPool[Math.floor(rand() * speciesPool.length)];
+        var headCenters = [size/2];
+        if(headCount === 2) headCenters = [size*0.35, size*0.65];
+        if(headCount === 3) headCenters = [size*0.25, size*0.5, size*0.75];
 
-        var finalDna = dnaString;
-        if(!finalDna) {
-            var mObj = masterMorphs[Math.floor(rand() * masterMorphs.length)];
-            finalDna = mObj.name;
-        }
-
-        var displayName = generateDisplayName(finalDna);
-        var incBonus = incubatorLevel * 25; 
-
-        var newSnake = {
-            seed: codeInput,
-            species: sObj.name,
-            type: sObj.type,
-            dna: finalDna,
-            variantName: displayName,
-            parents: parentHeritage || "Foundation Stock",
-            augments: [],
-            LIF: Math.floor(rand() * 100) + 20 + incBonus,
-            POW: Math.floor(rand() * 100) + 20 + incBonus,
-            INT: Math.floor(rand() * 100) + 20 + incBonus,
-            SKI: Math.floor(rand() * 100) + 20 + incBonus,
-            SPD: Math.floor(rand() * 100) + 20 + incBonus,
-            DEF: Math.floor(rand() * 100) + 20 + incBonus
-        };
-
-        generatePortrait(codeInput, newSnake.dna, sObj.type);
-        registerUnlockedMorph(newSnake.dna, newSnake.variantName);
-
-        var baseVal = calculateBaseValue(newSnake);
-        var numTraits = Math.floor(rand() * 10) + 1;
-        var availableRarities = traitRarities.filter(function(r) { return r.name !== "Monster of God" || baseVal > 250000; });
-
-        for(var i=0; i < numTraits; i++) {
-            var roll = rand() * 100;
-            var selectedRarity = availableRarities[0];
-            for (var j = availableRarities.length - 1; j >= 0; j--) {
-                if (roll >= availableRarities[j].chance) {
-                    selectedRarity = availableRarities[j];
-                    break;
+        headCenters.forEach(function(cx) {
+            for(var y = 0; y < size; y++) {
+                var targetWidth = 0;
+                for(var i=0; i<profile.length-1; i++) {
+                    var p1 = profile[i];
+                    var p2 = profile[i+1];
+                    if(y >= p1[0] && y <= p2[0]) {
+                        var t = (y - p1[0]) / (p2[0] - p1[0]);
+                        targetWidth = p1[1] + t * (p2[1] - p1[1]);
+                        if(headCount === 2) targetWidth *= 0.6;
+                        if(headCount === 3) targetWidth *= 0.45;
+                        break;
+                    }
+                }
+                if(targetWidth > 0) {
+                    for(var x = Math.floor(cx - targetWidth); x <= Math.ceil(cx + targetWidth); x++) {
+                        if(x >= 0 && x < size) mask[y][x] = true;
+                    }
                 }
             }
-            var adj = traitAdjectives[Math.floor(rand() * traitAdjectives.length)];
-            var noun = traitNouns[Math.floor(rand() * traitNouns.length)];
-            
-            var newTrait = {
-                name: `${selectedRarity.name} Trait: ${adj} ${noun}`,
-                color: selectedRarity.color,
-                multi: selectedRarity.multi,
-                bonuses: {}
-            };
-            
-            var availableStats = [...statsList];
-            for(var k=0; k < 3; k++) {
-                var s = availableStats[Math.floor(rand() * availableStats.length)];
-                if(!newTrait.bonuses[s]) newTrait.bonuses[s] = 0;
-                newTrait.bonuses[s] += Math.floor(selectedRarity.stats * (0.8 + rand()*0.4));
-            }
-            newSnake.augments.push(newTrait);
-            
-            if(selectedRarity.name === "Monster of God") {
-                logMsg(`ANOMALY DETECTED: This snake hatched with a Monster of God trait!`, 'mythic-text');
+        });
+
+        for (var y2 = 0; y2 < size; y2++) {
+            for (var x2 = 0; x2 < size; x2++) {
+                if (mask[y2][x2]) {
+                    var r = rand();
+                    if(r > 0.85) grid[y2][x2] = 3;
+                    else if(r > 0.4) grid[y2][x2] = 2;
+                    else grid[y2][x2] = 1;
+                }
             }
         }
 
-        calculateTotalValue(newSnake);
-
-        var baseTotal = statsList.reduce(function(acc, s) { return acc + newSnake[s]; }, 0);
-        if (baseTotal >= 400 || newSnake.value > 1000000) {
-            legendaryArchive.unshift({ seed: codeInput, species: newSnake.species, variant: newSnake.variantName });
-            if(legendaryArchive.length > 20) legendaryArchive.pop();
-            logMsg(`WORLD-CLASS HATCHLING! Seed ${codeInput} archived.`, 'mythic-text');
+        for (var pass = 0; pass < 2; pass++) {
+            var nextGrid = JSON.parse(JSON.stringify(grid));
+            for (var y3 = 0; y3 < size; y3++) {
+                for (var x3 = 0; x3 < size; x3++) {
+                    if (mask[y3][x3]) {
+                        var c1 = 0, c2 = 0, c3 = 0;
+                        for (var dy = -1; dy <= 1; dy++) {
+                            for (var dx = -1; dx <= 1; dx++) {
+                                var nx = x3 + dx, ny = y3 + dy;
+                                if (ny >= 0 && ny < size && nx >= 0 && nx < size && mask[ny][nx]) {
+                                    var v = grid[ny][nx];
+                                    if(v===1) c1++; else if(v===2) c2++; else if(v===3) c3++;
+                                }
+                            }
+                        }
+                        if(c3 >= 4) nextGrid[y3][x3] = 3;
+                        else if(c2 >= 4) nextGrid[y3][x3] = 2;
+                        else if(c1 >= 5) nextGrid[y3][x3] = 1;
+                    }
+                }
+            }
+            grid = nextGrid;
         }
 
-        logMsg(`Hatched a ${newSnake.variantName} ${sObj.name}.`);
-        snakeRack.unshift(newSnake); 
-        monster = newSnake; 
-        updateUI();
+        var finalGrid = JSON.parse(JSON.stringify(grid));
+        for (var y4 = 0; y4 < size; y4++) {
+            for (var x4 = 0; x4 < size; x4++) {
+                if (!mask[y4][x4]) {
+                    var touchesMask = false;
+                    for (var dy2 = -1; dy2 <= 1; dy2++) {
+                        for (var dx2 = -1; dx2 <= 1; dx2++) {
+                            var nx2 = x4 + dx2, ny2 = y4 + dy2;
+                            if (nx2 >= 0 && nx2 < size && ny2 >= 0 && ny2 < size && mask[ny2][nx2]) {
+                                touchesMask = true;
+                            }
+                        }
+                    }
+                    if (touchesMask) finalGrid[y4][x4] = 4;
+                }
+            }
+        }
+
+        for (var y5 = 0; y5 < size; y5++) {
+            for (var x5 = 0; x5 < size; x5++) {
+                if (finalGrid[y5][x5] > 0) {
+                    if(finalGrid[y5][x5] === 1) ctx.fillStyle = morphPalette.base;
+                    else if(finalGrid[y5][x5] === 2) ctx.fillStyle = morphPalette.pattern;
+                    else if(finalGrid[y5][x5] === 3) ctx.fillStyle = morphPalette.accent;
+                    else if(finalGrid[y5][x5] === 4) ctx.fillStyle = "#000000"; 
+                    ctx.fillRect(x5, y5, 1, 1); 
+                }
+            }
+        }
     }
 
     // ==========================================
-    // 5. DROPDOWNS & MARKETS
+    // 5. GLOBAL EVENT FUNCTIONS
     // ==========================================
+
+    window.jumpToTab = function(tabId) {
+        var tabBtns = document.querySelectorAll('.tab-btn');
+        var tabContents = document.querySelectorAll('.tab-content');
+        tabBtns.forEach(function(b) { b.classList.remove('active'); });
+        tabContents.forEach(function(c) { c.classList.remove('active'); });
+        var targetBtn = document.querySelector(`[data-target="${tabId}"]`);
+        var targetTab = document.getElementById(tabId);
+        if(targetBtn) targetBtn.classList.add('active');
+        if(targetTab) targetTab.classList.add('active');
+    };
+
+    window.buyIncubator = function(mode) {
+        var bought = 0;
+        var maxLoops = mode === '1' ? 1 : 1000;
+        var startWallet = wallet;
+        var spendLimit = mode === 'half' ? wallet / 2 : wallet;
+
+        while(bought < maxLoops) {
+            var cost = Math.floor(2500 * Math.pow(1.3, incubatorLevel));
+            if (wallet >= cost && (startWallet - wallet + cost) <= spendLimit) {
+                wallet -= cost;
+                incubatorLevel++;
+                incubatorTotalBonus += Math.floor(Math.random() * 21) + 5;
+                bought++;
+                if(mode === '1') break;
+            } else {
+                break;
+            }
+        }
+
+        if (bought > 0) {
+            logMsg(`Purchased x${bought} Incubator Upgrades.`, 'highlight');
+            updateUI();
+        } else {
+            alert("Insufficient funds for upgrade.");
+        }
+    };
+
+    window.selectSnake = function(index) {
+        monster = snakeRack[index];
+        generatePortrait(monster.seed, monster.dna, monster.type, monster.isShiny, monster.superColor, monster.heads);
+        updateUI();
+        window.jumpToTab('tab-profile');
+    };
+
+    window.quickSell = function(index) {
+        var snake = snakeRack[index];
+        if (snake.isRented) return alert("Cannot sell a snake that is currently on tour!");
+        
+        var val = calculateTotalValue(snake);
+        wallet += val;
+        logMsg(`Sold ${snake.variantName} ${snake.species} for $${formatAbbrev(val)}.`, "highlight");
+        
+        snakeRack.splice(index, 1);
+        if(monster === snake) {
+            if(snakeRack.length > 0) {
+                monster = snakeRack[0];
+                generatePortrait(monster.seed, monster.dna, monster.type, monster.isShiny, monster.superColor, monster.heads);
+            } else {
+                monster = null;
+                var placeholder = document.getElementById('portrait-placeholder');
+                var canvas = document.getElementById('monster-canvas');
+                var pCont = document.getElementById('portrait-container');
+                if(placeholder) placeholder.style.display = 'flex';
+                if(canvas) canvas.style.display = 'none';
+                if(pCont) {
+                    pCont.style.border = `2px solid var(--border)`;
+                    pCont.style.boxShadow = `3px 3px 0px var(--cyan)`;
+                }
+            }
+        }
+        maintainContracts(false);
+        updateUI();
+    };
+
+    window.buyDealerSnake = function(idx) {
+        var item = dealerStock[idx];
+        if(!item || item.sold) return;
+        if(snakeRack.length >= maxRack) return alert("Racks are full! Make space first.");
+        
+        if(wallet >= item.cost) {
+            wallet -= item.cost;
+            item.sold = true;
+            
+            snakeRack.unshift(item.snake);
+            registerUnlockedMorph(item.snake.dna, item.snake.variantName);
+            
+            var baseTotal = statsList.reduce(function(acc, s) { return acc + item.snake[s]; }, 0);
+            if (baseTotal >= 400 || item.snake.value > 1000000 || item.snake.isGodTier) {
+                legendaryArchive.unshift({ seed: item.snake.seed, species: item.snake.species, variant: item.snake.variantName });
+                if(legendaryArchive.length > 20) legendaryArchive.pop();
+            }
+
+            logMsg(`Imported ${item.snake.variantName} from the dealer!`, "highlight");
+            renderDealer();
+            updateUI();
+        } else {
+            alert("Insufficient funds to buy from importer.");
+        }
+    };
+
+    window.acceptContract = function(id) {
+        var idx = breedingContracts.findIndex(function(c) { return c.id === id; });
+        if(idx > -1) {
+            var c = breedingContracts[idx];
+            wallet += c.offer;
+            logMsg(`Contract Fulfilled! Sold genetic material from ${c.name} for $${formatAbbrev(c.offer)}.`, "highlight");
+            breedingContracts.splice(idx, 1);
+            maintainContracts(false);
+            updateUI();
+        }
+    };
+
+    window.haggleContract = function(id) {
+        var idx = breedingContracts.findIndex(function(c) { return c.id === id; });
+        if(idx > -1) {
+            var c = breedingContracts[idx];
+            c.chance -= 10;
+            
+            if (c.chance < 50) {
+                logMsg(`Buyer got insulted and walked away! Lost contract for ${c.name}.`, "warning");
+                breedingContracts.splice(idx, 1);
+                maintainContracts(false);
+                return;
+            }
+
+            if (Math.random() * 100 <= c.chance) {
+                var bump = 1 + (Math.random() * 0.15 + 0.15);
+                c.offer = Math.floor(c.offer * bump);
+                renderContracts();
+            } else {
+                logMsg(`Haggle failed. Buyer walked away from the ${c.name} contract.`, "warning");
+                breedingContracts.splice(idx, 1);
+                maintainContracts(false);
+            }
+        }
+    };
+
+    window.rentSnake = function(tier) {
+        if (activeRentals.length >= 3) return alert("You can only dispatch 3 snakes on tour at a time.");
+        var select = document.getElementById('zoo-snake-select');
+        var idx = select.value;
+        if (idx === "") return alert("Select a snake from the rack first.");
+        
+        var snake = snakeRack[idx];
+        if (snake.isRented) return alert("Snake is already on tour!");
+        
+        snake.isRented = true;
+        
+        var minMulti, maxMulti;
+        if(tier==='local') { minMulti = 5; maxMulti = 25; }
+        else if(tier==='regional') { minMulti = 25; maxMulti = 75; }
+        else if(tier==='state') { minMulti = 75; maxMulti = 150; }
+        else if(tier==='national') { minMulti = 150; maxMulti = 250; }
+
+        var actualMulti = Math.random() * (maxMulti - minMulti) + minMulti;
+
+        activeRentals.push({
+            snakeSeed: snake.seed,
+            tier: tier.toUpperCase(),
+            timer: 90,
+            multi: actualMulti
+        });
+
+        logMsg(`${snake.variantName} dispatched to a ${tier.toUpperCase()} Zoo for 90 seconds.`, "highlight");
+        updateUI();
+    };
+
+    window.runCompetition = function() {
+        if (compCooldown > 0) return alert(`Competition on cooldown for ${compCooldown} seconds.`);
+        
+        var select = document.getElementById('comp-snake-select');
+        var statKey = document.getElementById('comp-stat-select').value;
+        var idx = select.value;
+        if (idx === "") return alert("Select a snake from the rack first.");
+        
+        var pSnake = snakeRack[idx];
+        if (pSnake.isRented) return alert("Cannot enter a snake that is currently on tour!");
+
+        compCooldown = 30; // 30 second global cooldown
+        var speciesDef = speciesPool.find(s => s.name === pSnake.species);
+        var tier = speciesDef ? speciesDef.tier : 1;
+
+        var possibleSpecies = speciesPool.filter(s => s.tier === tier);
+        if(possibleSpecies.length === 0) possibleSpecies = speciesPool;
+        
+        function makeRival() {
+            var rSpec = possibleSpecies[Math.floor(Math.random() * possibleSpecies.length)];
+            var dna = masterMorphs[Math.floor(Math.random() * masterMorphs.length)].name;
+            var numTraits = Math.floor(Math.random() * pSnake.augments.length) + 1; 
+            var inherited = [];
+            for(var i=0; i<numTraits; i++) {
+                inherited.push(traitRarities[Math.floor(Math.random() * traitRarities.length)]);
+            }
+            var s = buildSnakeObject("RIVAL" + Math.floor(Math.random()*900000), dna, "Rival Breeder", inherited, false, false);
+            s.species = rSpec.name;
+            calculateRarityScore(s);
+            return s;
+        }
+
+        var r1 = makeRival();
+        var r2 = makeRival();
+
+        var pStat = statKey === "rarityScore" ? calculateRarityScore(pSnake) : pSnake[statKey];
+        var r1Stat = statKey === "rarityScore" ? calculateRarityScore(r1) : r1[statKey];
+        var r2Stat = statKey === "rarityScore" ? calculateRarityScore(r2) : r2[statKey];
+
+        var statName = document.getElementById('comp-stat-select').options[document.getElementById('comp-stat-select').selectedIndex].text;
+
+        logComp(`Entered ${pSnake.variantName} into the ${statName} contest...`, "bone");
+        logComp(`Rival 1 (${r1.variantName}) Scored: ${formatAbbrev(r1Stat)}`, "text");
+        logComp(`Rival 2 (${r2.variantName}) Scored: ${formatAbbrev(r2Stat)}`, "text");
+        logComp(`Your Snake Scored: ${formatAbbrev(pStat)}`, "highlight");
+
+        if (pStat >= r1Stat && pStat >= r2Stat) {
+            var cashPrize = calculateTotalValue(pSnake) * 5;
+            if(cashPrize < 5000) cashPrize = 5000;
+            wallet += cashPrize;
+
+            var pSeed = Math.floor(Math.random() * 9000000) + 1000000;
+            var prizeTraits = [];
+            for(var i=0; i<5; i++) prizeTraits.push(traitRarities[4]); // Force T5 Legendary
+            var prizeSnake = buildSnakeObject(pSeed.toString(), null, "Competition Grand Prize", prizeTraits, false, false);
+            
+            snakeRack.unshift(prizeSnake);
+            logComp(`VICTORY! You won $${formatAbbrev(cashPrize)} and a Legendary Prize Snake!`, "mythic-text");
+            updateUI();
+        } else {
+            logComp(`DEFEAT. Your snake wasn't strong enough to take the gold.`, "warning");
+        }
+    };
+
+    // ==========================================
+    // 6. UI RENDER FUNCTIONS
+    // ==========================================
+
+    function setupTabs() {
+        var tabBtns = document.querySelectorAll('.tab-btn');
+        var tabContents = document.querySelectorAll('.tab-content');
+        tabBtns.forEach(function(btn) {
+            btn.addEventListener('click', function(e) {
+                tabBtns.forEach(function(b) { b.classList.remove('active'); });
+                tabContents.forEach(function(c) { c.classList.remove('active'); });
+                e.target.classList.add('active');
+                var targetTab = document.getElementById(e.target.getAttribute('data-target'));
+                if(targetTab) targetTab.classList.add('active');
+            });
+        });
+    }
 
     function updateRackDropdowns() {
         var c1 = document.getElementById('cross-1');
         var c2 = document.getElementById('cross-2');
-        if(!c1 || !c2) return;
+        var zooSelect = document.getElementById('zoo-snake-select');
+        var compSelect = document.getElementById('comp-snake-select');
         
-        c1.innerHTML = '<option value="">-- Select Sire from Rack --</option>';
-        c2.innerHTML = '<option value="">-- Select Dam from Rack --</option>';
+        var sel1 = c1 ? c1.value : "";
+        var sel2 = c2 ? c2.value : "";
+        var selZoo = zooSelect ? zooSelect.value : "";
+        var selComp = compSelect ? compSelect.value : "";
 
-        snakeRack.forEach(function(snake, idx) {
-            var valStr = formatAbbrev(snake.value || calculateTotalValue(snake));
-            var optText = `#${idx+1} - ${snake.variantName} ${snake.species} ($${valStr})`;
-            c1.innerHTML += `<option value="${idx}">${optText}</option>`;
-            c2.innerHTML += `<option value="${idx}">${optText}</option>`;
+        if(c1) c1.innerHTML = '<option value="">-- Select Sire from Rack --</option>';
+        if(c2) c2.innerHTML = '<option value="">-- Select Dam from Rack --</option>';
+        if(zooSelect) zooSelect.innerHTML = '<option value="">-- Rack Empty / All Out --</option>';
+        if(compSelect) compSelect.innerHTML = '<option value="">-- Select Competitor --</option>';
+
+        var sortedList = snakeRack.map(function(snake, idx) {
+            var val = snake.value || calculateTotalValue(snake);
+            return { index: idx, snake: snake, val: val };
+        }).sort(function(a, b) {
+            return b.val - a.val;
         });
+
+        sortedList.forEach(function(item) {
+            var valStr = formatAbbrev(item.val);
+            var optText = `#${item.index+1} - ${item.snake.variantName} ${item.snake.species} ($${valStr})`;
+            
+            if(c1) c1.innerHTML += `<option value="${item.index}">${optText}${item.snake.isRented ? " [ON TOUR]" : ""}</option>`;
+            if(c2) c2.innerHTML += `<option value="${item.index}">${optText}${item.snake.isRented ? " [ON TOUR]" : ""}</option>`;
+            
+            if(zooSelect && !item.snake.isRented) {
+                zooSelect.innerHTML += `<option value="${item.index}">${optText}</option>`;
+            }
+            if(compSelect && !item.snake.isRented) {
+                compSelect.innerHTML += `<option value="${item.index}">${optText}</option>`;
+            }
+        });
+
+        if (c1 && sel1 !== "" && c1.querySelector(`option[value="${sel1}"]`)) c1.value = sel1;
+        if (c2 && sel2 !== "" && c2.querySelector(`option[value="${sel2}"]`)) c2.value = sel2;
+        if (zooSelect && selZoo !== "" && zooSelect.querySelector(`option[value="${selZoo}"]`)) zooSelect.value = selZoo;
+        if (compSelect && selComp !== "" && compSelect.querySelector(`option[value="${selComp}"]`)) compSelect.value = selComp;
     }
 
     function updateMorphDropdowns() {
@@ -1050,21 +1799,30 @@
         if (!unlockedMorphs.some(function(m) { return m.dna === dnaString; })) {
             unlockedMorphs.push({dna: dnaString, label: label});
             updateMorphDropdowns();
+            
+            var calculatedMilestones = Math.floor(unlockedMorphs.length / 20);
+            if (calculatedMilestones > hybridMilestones) {
+                hybridMilestones = calculatedMilestones;
+                globalComboBuff += 0.25;
+                logMsg(`Milestone Reached! +25% Global Value Buff! Combinations Unlocked: ${unlockedMorphs.length}`, "mythic-text");
+            }
         }
     }
 
-    function startMarketTimer() {
-        if (marketInterval) clearInterval(marketInterval);
-        marketInterval = setInterval(function() {
-            marketTimer--;
-            var textEl = document.getElementById('market-timer-text');
-            var fillEl = document.getElementById('market-timer-fill');
-            if(textEl) textEl.innerText = marketTimer;
-            if(fillEl) fillEl.style.width = `${(marketTimer / 10) * 100}%`;
+    function startDealerTimer() {
+        if (dealerInterval) clearInterval(dealerInterval);
+        refreshDealerStock(); 
 
-            if (marketTimer <= 0) {
-                fluctuateMarket();
-                marketTimer = 10;
+        dealerInterval = setInterval(function() {
+            dealerTimer--;
+            var textEl = document.getElementById('dealer-timer-text');
+            var fillEl = document.getElementById('dealer-timer-fill');
+            if(textEl) textEl.innerText = dealerTimer;
+            if(fillEl) fillEl.style.width = `${(dealerTimer / 10) * 100}%`;
+
+            if (dealerTimer <= 0) {
+                refreshDealerStock();
+                dealerTimer = 10;
                 if(fillEl) {
                     fillEl.style.transition = 'none';
                     fillEl.style.width = '100%';
@@ -1074,105 +1832,140 @@
         }, 1000);
     }
 
-    function fluctuateMarket() {
-        for (var key in market) {
-            var asset = market[key];
-            var roll = Math.random();
-            if (roll < 0.05) asset.price = Math.floor(asset.price * (10 + Math.random() * 40));
-            else if (roll < 0.10) asset.price = Math.floor(asset.price / (2 + Math.random() * 5));
-            else {
-                var swing = (Math.random() * 4) - 0.5;
-                asset.price = Math.floor(asset.price * (1 + swing));
-            }
-            if (asset.price < 1) asset.price = 1;
-            if (asset.price > asset.max) asset.price = asset.max;
+    function refreshDealerStock() {
+        dealerStock = [];
+        for(var i=0; i<10; i++) {
+            var sSeed = Math.floor(Math.random() * 9000000) + 1000000;
+            var discount = Math.random() * 0.40 + 0.50; 
+            var costMulti = 1 - discount; 
+            
+            var s = buildSnakeObject(sSeed.toString(), null, "Exotic Importer");
+            var trueVal = calculateTotalValue(s);
+            var cost = Math.max(100, Math.floor(trueVal * costMulti));
+            
+            dealerStock.push({
+                snake: s,
+                trueValue: trueVal,
+                cost: cost,
+                discountPct: Math.floor(discount * 100),
+                sold: false
+            });
         }
-        renderMarket();
-        saveGame();
+        renderDealer();
     }
 
-    window.tradeAsset = function(key, action, ratio) {
-        var asset = market[key];
-        if (action === 'buy') {
-            var maxAffordable = Math.floor(wallet / asset.price);
-            var qty = Math.max(1, Math.floor(maxAffordable * ratio));
-            var totalCost = qty * asset.price;
-            if (wallet >= totalCost && maxAffordable > 0) {
-                wallet -= totalCost;
-                asset.owned += qty;
-                updateUI();
-            }
-        } else if (action === 'sell') {
-            var qtySell = Math.max(1, Math.floor(asset.owned * ratio));
-            if (asset.owned >= qtySell) {
-                asset.owned -= qtySell;
-                wallet += qtySell * asset.price;
-                updateUI();
-            }
-        }
-    };
-
-    function renderMarket() {
-        var container = document.getElementById('market-container');
+    function renderDealer() {
+        var container = document.getElementById('dealer-container');
         if(!container) return;
         container.innerHTML = '';
-        for (var key in market) {
-            var asset = market[key];
-            var row = document.createElement('div');
-            row.className = 'market-row';
-            var displayPrice = formatAbbrev(asset.price);
 
-            row.innerHTML = `
-                <div style="flex:1;">
-                    <div style="color:var(--bone); font-weight:bold; font-size: 0.9em;">${asset.name}</div>
-                    <div style="font-size: 0.8em; color:var(--text);">Owned: <span style="color:#fff;">${asset.owned}</span></div>
-                </div>
-                <div style="flex:1; text-align:center; color:var(--cyan); font-size:1em; font-weight:bold;">
-                    $${displayPrice}
-                </div>
-                <div style="display:flex; gap:5px;">
-                    <button class="market-btn btn-buy" onclick="tradeAsset('${key}', 'buy', 0.5)">BUY 1/2</button>
-                    <button class="market-btn btn-buy" onclick="tradeAsset('${key}', 'buy', 1)">BUY MAX</button>
-                    <button class="market-btn btn-sell" onclick="tradeAsset('${key}', 'sell', 0.5)">SELL 1/2</button>
-                    <button class="market-btn btn-sell" onclick="tradeAsset('${key}', 'sell', 1)">SELL MAX</button>
+        dealerStock.forEach(function(item, idx) {
+            if(item.sold) return;
+
+            var row = document.createElement('div');
+            row.className = 'dealer-card';
+
+            var bColor = item.snake.superColor ? item.snake.superColor : 'var(--magenta)';
+            if(item.snake.isGodTier) bColor = '#ffffff';
+
+            var btnHtml = document.createElement('button');
+            btnHtml.className = 'btn btn-magenta';
+            btnHtml.style.padding = '10px';
+            btnHtml.style.margin = '0';
+            btnHtml.innerText = 'BUY';
+            btnHtml.addEventListener('click', function() { window.buyDealerSnake(idx); });
+
+            var htmlContent = `
+                <div style="flex:1; display:flex; flex-direction:column; gap:3px;">
+                    <div style="font-weight:900; color:var(--bone); font-size:0.9em;">${item.snake.species}</div>
+                    <div style="color:${bColor}; font-size:0.8em; font-weight:bold;">${item.snake.variantName}</div>
+                    <div style="font-size:0.75em; color:var(--text); text-decoration:line-through;">Value: $${formatAbbrev(item.trueValue)}</div>
+                    <div style="font-size:1em; color:var(--cyan); font-weight:900;">Price: $${formatAbbrev(item.cost)} <span style="background:var(--blood); color:#fff; padding:1px 4px; border-radius:3px; font-size:0.7em;">-${item.discountPct}%</span></div>
                 </div>
             `;
+            
+            row.innerHTML = htmlContent;
+            var btnDiv = document.createElement('div');
+            btnDiv.appendChild(btnHtml);
+            row.appendChild(btnDiv);
+
             container.appendChild(row);
+        });
+        
+        if (dealerStock.every(function(x) { return x.sold; })) {
+            container.innerHTML = '<div style="text-align:center; color: #777; margin-top: 30px; font-weight:bold; font-size:0.9em;">Importer sold out. Wait for restock.</div>';
         }
     }
 
-    // ==========================================
-    // 6. RACK, PROFILE & UI UPDATES
-    // ==========================================
+    function maintainContracts(forceWipe) {
+        if(forceWipe) breedingContracts = [];
+        breedingContracts = breedingContracts.filter(function(c) {
+            return snakeRack.some(function(s) { return s.seed === c.seed; });
+        });
 
-    window.selectSnake = function(index) {
-        monster = snakeRack[index];
-        generatePortrait(monster.seed, monster.dna, monster.type);
-        updateUI();
-        jumpToTab('tab-profile');
-    };
-
-    window.quickSell = function(index) {
-        var snake = snakeRack[index];
-        var val = calculateTotalValue(snake);
-        wallet += val;
-        logMsg(`Sold ${snake.variantName} ${snake.species} for $${val.toLocaleString()}.`, "highlight");
-        
-        snakeRack.splice(index, 1);
-        if(monster === snake) {
-            if(snakeRack.length > 0) {
-                monster = snakeRack[0];
-                generatePortrait(monster.seed, monster.dna, monster.type);
-            } else {
-                monster = null;
-                var placeholder = document.getElementById('portrait-placeholder');
-                var canvas = document.getElementById('monster-canvas');
-                if(placeholder) placeholder.style.display = 'flex';
-                if(canvas) canvas.style.display = 'none';
+        if(snakeRack.length > 0) {
+            while(breedingContracts.length < 5) {
+                var randSnake = snakeRack[Math.floor(Math.random() * snakeRack.length)];
+                var baseOff = Math.floor(calculateTotalValue(randSnake) * (Math.random() * 0.25 + 0.15)); 
+                if (baseOff < 100) baseOff = 100;
+                
+                breedingContracts.push({
+                    id: Math.random().toString(36).substr(2, 9),
+                    seed: randSnake.seed,
+                    name: randSnake.variantName,
+                    offer: baseOff,
+                    chance: 100
+                });
             }
         }
-        updateUI();
-    };
+        renderContracts();
+    }
+
+    function renderContracts() {
+        var container = document.getElementById('contracts-container');
+        if(!container) return;
+
+        if (snakeRack.length === 0) {
+            container.innerHTML = '<div style="text-align:center; color: #777; margin-top: 30px; font-weight:bold; font-size:0.9em;">You need snakes in your rack to receive contracts!</div>';
+            return;
+        }
+
+        container.innerHTML = '';
+        breedingContracts.forEach(function(c) {
+            var row = document.createElement('div');
+            row.className = 'contract-item';
+            
+            var btnAcc = document.createElement('button');
+            btnAcc.className = 'market-btn btn-buy';
+            btnAcc.style.flex = '1';
+            btnAcc.innerText = 'ACCEPT';
+            btnAcc.addEventListener('click', function(){ window.acceptContract(c.id); });
+
+            var btnHag = document.createElement('button');
+            btnHag.className = 'market-btn btn-sell';
+            btnHag.style.flex = '1';
+            btnHag.innerText = 'HAGGLE (+15-30%)';
+            btnHag.addEventListener('click', function(){ window.haggleContract(c.id); });
+
+            var htmlContent = `
+                <div class="contract-header">Request: Genetic Material from ${c.name}</div>
+                <div class="contract-info">
+                    <span style="color:var(--cyan); font-weight:900;">Offer: $${formatAbbrev(c.offer)}</span> | 
+                    <span style="color:${c.chance >= 50 ? 'var(--bone)' : 'var(--blood)'};">Success Chance: ${c.chance}%</span>
+                </div>
+            `;
+            row.innerHTML = htmlContent;
+            
+            var btnDiv = document.createElement('div');
+            btnDiv.style.display = 'flex';
+            btnDiv.style.gap = '5px';
+            btnDiv.appendChild(btnAcc);
+            btnDiv.appendChild(btnHag);
+
+            row.appendChild(btnDiv);
+            container.appendChild(row);
+        });
+    }
 
     function renderRack() {
         var container = document.getElementById('rack-container');
@@ -1190,68 +1983,285 @@
             var row = document.createElement('div');
             row.className = 'rack-item';
             var val = calculateTotalValue(snake);
+            var borderColor = snake.superColor ? snake.superColor : 'var(--magenta)';
+            if(snake.isGodTier) borderColor = '#ffffff';
+
+            row.style.borderLeft = `6px solid ${borderColor}`;
+            if(snake.superColor || snake.isGodTier) {
+                row.style.boxShadow = `inset 2px 0 10px -5px ${borderColor}`;
+            }
+
+            var rentalTag = snake.isRented ? `<span style="background:var(--cyan); color:#000; padding:2px 4px; font-size:0.7em; border-radius:2px; font-weight:bold; margin-left:5px;">ON TOUR</span>` : '';
             
-            row.innerHTML = `
+            var btnView = document.createElement('button');
+            btnView.className = 'market-btn';
+            btnView.style.background = 'var(--box-bg)';
+            btnView.style.color = '#fff';
+            btnView.innerText = 'VIEW';
+            
+            var btnSell = document.createElement('button');
+            btnSell.className = 'market-btn';
+            btnSell.style.background = 'var(--magenta)';
+            btnSell.style.color = '#fff';
+            btnSell.innerText = 'SELL';
+            
+            if(snake.isRented) {
+                btnView.disabled = true;
+                btnSell.disabled = true;
+                btnView.innerText = 'ON TOUR';
+                btnSell.style.display = 'none';
+            } else {
+                btnView.addEventListener('click', function(){ window.selectSnake(idx); });
+                btnSell.addEventListener('click', function(){ window.quickSell(idx); });
+            }
+
+            var rScore = calculateRarityScore(snake);
+            var traitCount = snake.augments ? snake.augments.length : 0;
+            var topTrait = (snake.augments && snake.augments.length > 0)
+                ? [...snake.augments].sort((a,b) => b.tier - a.tier)[0].name
+                : "No Traits";
+
+            var htmlContent = `
                 <div class="rack-rank">#${idx+1}</div>
                 <div class="rack-info">
-                    <div style="font-weight: bold; color: var(--bone);">${snake.species} <span style="font-size:0.85em; color:var(--magenta);">${snake.variantName}</span></div>
+                    <div style="font-weight: bold; color: var(--bone);">${snake.species} <span style="font-size:0.85em; color:${borderColor};">${snake.variantName}</span>${rentalTag}</div>
                     <div class="rack-parents">Heritage: ${snake.parents || "Foundation Stock"}</div>
-                    <div style="font-size: 0.95em; color: var(--cyan); font-weight: bold; margin-top: 3px;">$${val.toLocaleString()}</div>
+                    <div style="font-size: 0.75em; color: var(--gold); margin-top: 2px;">★ Rarity: <strong>${rScore.toLocaleString()}</strong> pts (${traitCount} Traits)</div>
+                    <div style="font-size: 0.7em; color: var(--cyan); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 220px;">Top: ${topTrait}</div>
+                    <div style="font-size: 0.95em; color: var(--cyan); font-weight: bold; margin-top: 2px;">$${formatAbbrev(val)}</div>
                 </div>
-                <div class="rack-actions">
-                    <button class="market-btn" style="background:var(--box-bg); color:#fff;" onclick="selectSnake(${idx})">VIEW</button>
-                    <button class="market-btn" style="background:var(--magenta); color:#fff;" onclick="quickSell(${idx})">SELL</button>
+            `;
+            
+            row.innerHTML = htmlContent;
+            var actionDiv = document.createElement('div');
+            actionDiv.className = 'rack-actions';
+            actionDiv.appendChild(btnView);
+            actionDiv.appendChild(btnSell);
+            row.appendChild(actionDiv);
+
+            container.appendChild(row);
+        });
+    }
+
+    function renderRentals() {
+        var container = document.getElementById('rentals-container');
+        var countEl = document.getElementById('tour-count');
+        if(countEl) countEl.innerText = activeRentals.length;
+        if(!container) return;
+
+        if(activeRentals.length === 0) {
+            container.innerHTML = '<div style="text-align:center; color: #777; margin-top: 30px; font-weight:bold; font-size:0.9em;">No snakes currently on tour.</div>';
+            return;
+        }
+
+        container.innerHTML = '';
+        activeRentals.forEach(function(r) {
+            var s = snakeRack.find(function(x) { return x.seed === r.snakeSeed; });
+            if(!s) return; 
+            
+            var row = document.createElement('div');
+            row.style.marginBottom = '12px';
+            var pct = (r.timer / 90) * 100;
+            
+            row.innerHTML = `
+                <div style="font-size: 0.85em; color: var(--bone); font-weight: bold; margin-bottom: 4px;">${s.variantName} <span style="color:var(--magenta); font-size:0.8em;">[${r.tier}]</span></div>
+                <div class="timer-bar" style="height: 18px; margin-bottom: 0;">
+                    <div class="timer-fill" style="width: ${pct}%; transition: none; background: var(--cyan);"></div>
+                    <div class="timer-text" style="top: 2px;">${r.timer}s remaining</div>
                 </div>
             `;
             container.appendChild(row);
         });
     }
 
-    function renderArchive() {
-        var list = document.getElementById('archive-list');
-        if(!list) return;
-        list.innerHTML = '';
-        if (legendaryArchive.length === 0) {
-            list.innerHTML = '<div style="text-align:center; color: #777; margin-top: 30px;">No legendary reptiles produced yet.</div>';
+    function renderZooLog() {
+        var logContainer = document.getElementById('zoo-log');
+        if(!logContainer) return;
+        if(zooLog.length === 0) {
+            logContainer.innerHTML = '<div style="color: #777; font-style: italic;">No payouts recorded yet.</div>';
             return;
         }
-        legendaryArchive.forEach(function(item) {
-            var row = document.createElement('div');
-            row.className = 'archive-item';
-            row.innerHTML = `<span>Seed: <strong>${item.seed}</strong> (${item.species})</span> <span style="color:var(--fde);">${item.variant}</span>`;
-            list.appendChild(row);
+        logContainer.innerHTML = '';
+        zooLog.forEach(function(msg) {
+            var entry = document.createElement('div');
+            entry.style.borderBottom = '1px solid #333';
+            entry.style.padding = '4px 0';
+            entry.innerText = msg;
+            logContainer.appendChild(entry);
         });
     }
 
-    function updateUI() {
-        var walletDisplay = formatAbbrev(wallet);
-        
-        var elWallet = document.getElementById('m-wallet');
-        var elPrestige = document.getElementById('m-prestige');
-        var elRackStat = document.getElementById('m-rack-stat');
-        var elSpecies = document.getElementById('m-species');
-        var elVariant = document.getElementById('m-variant');
-        var elQuickSell = document.getElementById('btn-quick-sell-dash');
-        var elValBase = document.getElementById('val-base');
-        var elValMult = document.getElementById('val-mult');
-        var elSnakeVal = document.getElementById('snake-value');
+    var secCounter = 0;
+    function updatePassiveTick() {
+        var needsFullUpdate = false;
 
-        if(elWallet) elWallet.innerText = walletDisplay;
-        if(elPrestige) elPrestige.innerText = prestige;
+        if(snakeRack.length > 0) {
+            var yieldAmt = snakeRack.reduce(function(acc, s) { return acc + Math.floor((s.value || 0) * 0.002); }, 0); 
+            if(yieldAmt > 0) {
+                wallet += yieldAmt;
+                var elWallet = document.getElementById('m-wallet');
+                if(elWallet) elWallet.innerText = formatAbbrev(wallet);
+            }
+        }
+
+        secCounter++;
+        if (secCounter >= 60) {
+            secCounter = 0;
+            if(bankAccount > 0) {
+                var interest = Math.floor(bankAccount * 0.02); 
+                bankAccount += interest;
+                logMsg(`High-Yield Savings paid $${formatAbbrev(interest)} in interest.`, "highlight");
+                needsFullUpdate = true;
+            }
+        }
+
+        if(compCooldown > 0) compCooldown--;
+
+        contractTimer--;
+        if (contractTimer <= 0) {
+            maintainContracts(true);
+            contractTimer = 60;
+        }
+        var cText = document.getElementById('contract-timer-text');
+        if(cText) cText.innerText = contractTimer;
+
+        for(var i = activeRentals.length - 1; i >= 0; i--) {
+            var r = activeRentals[i];
+            r.timer--;
+            if(r.timer <= 0) {
+                var s = snakeRack.find(function(x) { return x.seed === r.snakeSeed; });
+                if(s) {
+                    var payout = Math.floor(calculateTotalValue(s) * r.multi);
+                    wallet += payout;
+                    s.isRented = false;
+                    
+                    var logStr = `${s.variantName} returned from ${r.tier} Zoo: +$${formatAbbrev(payout)} (${(r.multi*100).toFixed(0)}%)`;
+                    zooLog.unshift(logStr);
+                    if(zooLog.length > 3) zooLog.pop();
+                    
+                    logMsg(`TOUR COMPLETE! ${s.variantName} earned $${formatAbbrev(payout)}.`, "mythic-text");
+                    needsFullUpdate = true;
+                }
+                activeRentals.splice(i, 1);
+            }
+        }
+
+        // Auto Breeder check every 2 seconds
+        if (autoBreedActive && secCounter % 2 === 0) {
+            if (snakeRack.length < maxRack && snakeRack.length >= 2 && !incubating) {
+                var availableSnakes = snakeRack.filter(function(s) { return !s.isRented; });
+                availableSnakes.sort(function(a, b) { return (b.value || 0) - (a.value || 0); });
+                
+                if (availableSnakes.length >= 2) {
+                    var sire = availableSnakes[0];
+                    var dam = availableSnakes[1];
+                    var parentLineage = (sire.seed === dam.seed) ? `Self-Bred (${sire.variantName})` : `${sire.variantName} × ${dam.variantName}`;
+                    var hybridDna = `${sire.dna} x ${dam.dna}`;
+                    var shinyInherited = false;
+                    if((sire.isShiny || dam.isShiny) && Math.random() < 0.10) shinyInherited = true;
+                    var inherited = [...getInheritedTraits(sire), ...getInheritedTraits(dam)];
+                    startIncubation(hybridDna, parentLineage, inherited, shinyInherited);
+                    logMsg(`Auto-Synthesizing top pair...`, "highlight");
+                }
+            } else if (snakeRack.length >= maxRack && autoBreedActive) {
+                autoBreedActive = false;
+                var bBtn = document.getElementById('btn-auto-breed');
+                if(bBtn) {
+                    bBtn.innerText = "Auto-Synthesize Top Pair (2s)";
+                    bBtn.style.background = "transparent";
+                    bBtn.style.color = "var(--magenta)";
+                }
+                logMsg("Auto-Breeder Paused - Racks Full.", "warning");
+            }
+        }
+
+        renderRentals();
+        if(needsFullUpdate) updateUI();
+    }
+
+    function updateUI() {
+        var elWallet = document.getElementById('m-wallet');
+        var elBank = document.getElementById('m-bank');
+        var elPrestige = document.getElementById('m-prestige');
+        var elDiscovered = document.getElementById('m-discovered');
+        var elRackStat = document.getElementById('m-rack-stat');
+        
+        if(elWallet) elWallet.innerText = formatAbbrev(wallet);
+        if(elBank) elBank.innerText = formatAbbrev(bankAccount);
+        if(elPrestige) elPrestige.innerText = `x${(1 + (prestige * 0.5) + globalComboBuff).toFixed(2)}`; 
+        if(elDiscovered) elDiscovered.innerText = unlockedMorphs.length;
         if(elRackStat) elRackStat.innerText = `${snakeRack.length}/${maxRack}`;
         
         var rackCost = (maxRack / 10) * 5000;
         var btnRack = document.getElementById('btn-upgrade-rack');
         if(btnRack) btnRack.innerText = `Expand Storage (+10) : $${formatAbbrev(rackCost)}`;
 
-        var incCost = (incubatorLevel + 1) * 2500;
-        var btnInc = document.getElementById('btn-upgrade-incubator');
-        if(btnInc) btnInc.innerText = `Upgrade Incubators (+Stats) : $${formatAbbrev(incCost)}`;
+        var incCost = Math.floor(2500 * Math.pow(1.3, incubatorLevel));
+        var btnIncDisplay = document.getElementById('inc-cost-display');
+        var btnIncLvl = document.getElementById('inc-lvl-display');
+        if(btnIncDisplay) btnIncDisplay.innerText = `Cost: $${formatAbbrev(incCost)}`;
+        if(btnIncLvl) btnIncLvl.innerText = `Lvl ${incubatorLevel} (+${incubatorTotalBonus})`;
         
+        var elSpecies = document.getElementById('m-species');
+        var elVariant = document.getElementById('m-variant');
+        
+        var elProfSpecies = document.getElementById('m-prof-species');
+        var elProfVariant = document.getElementById('m-prof-variant');
+        var elProfDna = document.getElementById('m-prof-dna');
+        var elProfRarity = document.getElementById('m-prof-rarity');
+
+        var elQuickSell = document.getElementById('btn-quick-sell-dash');
+        var elValBase = document.getElementById('val-base');
+        var elValMult = document.getElementById('val-mult');
+        var elSnakeVal = document.getElementById('snake-value');
+
         if(monster) {
             if(elSpecies) elSpecies.innerText = monster.species;
-            if(elVariant) { elVariant.innerText = monster.variantName; elVariant.style.color = "var(--magenta)"; }
-            if(elQuickSell) elQuickSell.style.display = 'block';
+            if(elVariant) { 
+                elVariant.innerText = monster.variantName; 
+                elVariant.style.color = monster.superColor ? monster.superColor : "var(--magenta)"; 
+                if(monster.isGodTier) elVariant.style.color = "#ffffff";
+            }
+            if(elProfSpecies) elProfSpecies.innerText = monster.species;
+            if(elProfVariant) {
+                elProfVariant.innerText = monster.variantName;
+                elProfVariant.style.color = monster.superColor ? monster.superColor : "var(--magenta)"; 
+                if(monster.isGodTier) elProfVariant.style.color = "#ffffff";
+            }
+            if(elProfDna) elProfDna.innerText = monster.dna;
+            
+            var rScore = calculateRarityScore(monster);
+            
+            // Itemized Rarity Score Breakdown
+            var speciesDef = speciesPool.find(function(s) { return s.name === monster.species; });
+            var baseSpeciesPts = speciesDef ? speciesDef.pts : 100;
+            var traitPts = 0;
+            if(monster.augments) {
+                monster.augments.forEach(function(t) { traitPts += (t.pts || 0); });
+            }
+            
+            var mutBonusText = [];
+            if(monster.isGodTier) mutBonusText.push("Monster of God (+50,000)");
+            if(monster.isShiny) mutBonusText.push("Shiny (+10,000)");
+            if(monster.heads === 3) mutBonusText.push("Hydra (+15,000)");
+            else if(monster.heads === 2) mutBonusText.push("Twin (+5,000)");
+
+            if(elProfRarity) {
+                elProfRarity.innerHTML = `
+                    <span style="font-size: 1.1em; color: var(--gold);">${rScore.toLocaleString()} Total Pts</span>
+                    <div style="font-size: 0.8em; color: var(--text); font-weight: normal; margin-top: 5px; border-top: 1px dashed #444; padding-top: 4px; line-height: 1.4;">
+                        <div>• Species Base: <strong style="color:var(--bone);">${baseSpeciesPts.toLocaleString()} pts</strong></div>
+                        <div>• Innate Traits (${monster.augments ? monster.augments.length : 0}): <strong style="color:var(--cyan);">${traitPts.toLocaleString()} pts</strong></div>
+                        ${mutBonusText.length > 0 ? `<div>• Phenotypes: <strong style="color:var(--magenta);">${mutBonusText.join(', ')}</strong></div>` : ''}
+                    </div>
+                `;
+            }
+
+            if(monster.isRented) {
+                if(elQuickSell) elQuickSell.style.display = 'none';
+            } else {
+                if(elQuickSell) elQuickSell.style.display = 'block';
+            }
             
             statsList.forEach(function(stat) {
                 var base = monster[stat] || 0;
@@ -1271,13 +2281,17 @@
             }
             
             var val = calculateTotalValue(monster);
-            if(elValBase) elValBase.innerText = `$${Math.floor(val / traitMultiplier).toLocaleString()}`;
+            if(elValBase) elValBase.innerText = `$${formatAbbrev(Math.floor(val / traitMultiplier))}`;
             if(elValMult) elValMult.innerText = `x${traitMultiplier.toFixed(1)}`;
-            if(elSnakeVal) elSnakeVal.innerText = `$${val.toLocaleString()}`;
+            if(elSnakeVal) elSnakeVal.innerText = `$${formatAbbrev(val)}`;
             if(elQuickSell) elQuickSell.innerText = `Quick Sell: $${formatAbbrev(val)}`;
         } else {
             if(elSpecies) elSpecies.innerText = "RACK EMPTY";
-            if(elVariant) elVariant.innerText = "";
+            if(elVariant) { elVariant.innerText = ""; }
+            if(elProfSpecies) elProfSpecies.innerText = "--";
+            if(elProfVariant) { elProfVariant.innerText = "--"; elProfVariant.style.color = "var(--magenta)"; }
+            if(elProfDna) elProfDna.innerText = "--";
+            if(elProfRarity) elProfRarity.innerText = "0";
             if(elQuickSell) elQuickSell.style.display = 'none';
             statsList.forEach(function(stat) {
                 var mEl = document.getElementById(`m-${stat.toLowerCase()}`);
@@ -1296,14 +2310,20 @@
             if(!monster || !monster.augments || monster.augments.length === 0) {
                 profileList.innerHTML = '<div style="text-align:center; color: var(--text); margin-top: 50px;">No innate genetic traits on this snake.</div>';
             } else {
-                monster.augments.forEach(function(aug) {
+                // Sort highest tier to lowest tier
+                var sortedTraits = [...monster.augments].sort(function(a, b) { return (b.tier || 0) - (a.tier || 0); });
+                sortedTraits.forEach(function(aug) {
                     var item = document.createElement('div');
                     item.className = 'augment-item';
+                    item.style.borderLeft = `4px solid ${aug.color}`;
                     var statString = Object.entries(aug.bonuses).map(function([stat, val]) { return `${stat} +${val}`; }).join(' | ');
                     item.innerHTML = `
-                        <div style="color: ${aug.color}; font-weight: bold;">${aug.name}</div>
-                        <div style="color: var(--text); font-size: 0.9em; margin-bottom: 3px;">+${(aug.multi * 100).toLocaleString()}% Value</div>
-                        <div class="aug-stats">${statString}</div>
+                        <div style="display: flex; justify-content: space-between; align-items: center;">
+                            <span style="color: ${aug.color}; font-weight: 900;">${aug.name} [T${aug.tier}]</span>
+                            <span style="color: var(--gold); font-weight: bold; font-size: 0.85em;">+${(aug.pts || 0).toLocaleString()} Pts</span>
+                        </div>
+                        <div style="color: var(--text); font-size: 0.85em; margin: 2px 0;">Value Multiplier: <strong style="color:var(--magenta);">+${(aug.multi * 100).toLocaleString()}%</strong></div>
+                        <div class="aug-stats" style="font-size: 0.8em;">${statString}</div>
                     `;
                     profileList.appendChild(item);
                 });
@@ -1312,69 +2332,202 @@
 
         renderRack();
         updateRackDropdowns(); 
-        renderArchive();
+        renderRentals();
+        renderZooLog();
         saveGame();
     }
 
+    function startIncubation(dnaString, parentHeritage, inheritedTraits = [], isForcedShiny = false, isForcedGod = false) {
+        if(incubating) return;
+        if(snakeRack.length >= maxRack) {
+            if(!autoHatchActive && !autoBreedActive) alert("Racks are full! Make space.");
+            return;
+        }
+
+        incubating = true;
+        var bar = document.getElementById('clutch-bar');
+        var fill = document.getElementById('clutch-fill');
+        if(bar) bar.style.display = 'block';
+        if(fill) {
+            fill.style.transition = 'none';
+            fill.style.width = '0%';
+        }
+
+        var btns = [document.getElementById('btn-summon'), document.getElementById('btn-summon-morph'), document.getElementById('btn-crossbreed')];
+        btns.forEach(b => { if(b) b.disabled = true; });
+
+        setTimeout(function() {
+            if(fill) {
+                fill.style.transition = 'width 3s linear';
+                fill.style.width = '100%';
+            }
+        }, 50);
+
+        setTimeout(function() {
+            var numHatchlings = Math.floor(Math.random() * 4) + 3; 
+            for(var i=0; i<numHatchlings; i++) {
+                if(snakeRack.length >= maxRack) break; 
+                
+                var rSeed = Math.floor(Math.random() * 9000000) + 1000000;
+                var s = buildSnakeObject(rSeed.toString(), dnaString, parentHeritage, inheritedTraits, isForcedGod, isForcedShiny);
+                
+                snakeRack.unshift(s);
+                registerUnlockedMorph(s.dna, s.variantName);
+            }
+
+            monster = snakeRack[0]; 
+            logMsg(`Clutch hatched! ${numHatchlings} new serpents added to rack.`, 'mythic-text');
+            
+            incubating = false;
+            if(bar) bar.style.display = 'none';
+            btns.forEach(b => { if(b) b.disabled = false; });
+            
+            maintainContracts(false);
+            updateUI();
+        }, 3000);
+    }
+
     // ==========================================
-    // 7. SAVING & INITIALIZATION
+    // 7. SAVING & INITIALIZATION 
     // ==========================================
 
-    function saveGame() {
-        var saveState = { 
-            wallet: wallet, prestige: prestige, rack: snakeRack, market: market, 
+    function getSaveStateObject() {
+        return { 
+            wallet: wallet, bank: bankAccount, prestige: prestige, rack: snakeRack, 
             archive: legendaryArchive, morphs: unlockedMorphs, 
-            maxRack: maxRack, incLevel: incubatorLevel 
+            maxRack: maxRack, incLevel: incubatorLevel, incBonus: incubatorTotalBonus,
+            hybMiles: hybridMilestones, globalCb: globalComboBuff,
+            rentals: activeRentals, zLog: zooLog, contracts: breedingContracts
         };
-        localStorage.setItem('serpent_syndicate_master_v11', JSON.stringify(saveState));
+    }
+
+    function saveGame() {
+        localStorage.setItem('serpent_syndicate_master_v29', JSON.stringify(getSaveStateObject()));
     }
 
     function loadGame() {
-        var saved = localStorage.getItem('serpent_syndicate_master_v11');
+        var saved = localStorage.getItem('serpent_syndicate_master_v29') || 
+                    localStorage.getItem('serpent_syndicate_master_v28') || 
+                    localStorage.getItem('serpent_syndicate_master_v27');
         if (saved) {
             try {
                 var parsed = JSON.parse(saved);
-                if(parsed.wallet !== undefined) wallet = Number(parsed.wallet) || 0;
-                if(parsed.prestige !== undefined) prestige = Number(parsed.prestige) || 0;
-                if(Array.isArray(parsed.rack)) snakeRack = parsed.rack;
-                if(parsed.maxRack !== undefined) maxRack = Number(parsed.maxRack) || 20;
-                if(parsed.incLevel !== undefined) incubatorLevel = Number(parsed.incLevel) || 0;
-                if(Array.isArray(parsed.archive)) legendaryArchive = parsed.archive;
-                if(Array.isArray(parsed.morphs)) unlockedMorphs = parsed.morphs;
-                if(parsed.market) market = parsed.market;
-                
-                if(snakeRack.length > 0) {
-                    monster = snakeRack[0];
-                    generatePortrait(monster.seed, monster.dna, monster.type);
-                } else {
-                    monster = null;
-                }
+                applySaveState(parsed);
             } catch(e) {
-                console.error("Load save error:", e);
+                console.error("Load save error, sanitizing arrays:", e);
+                snakeRack = []; activeRentals = []; zooLog = []; breedingContracts = [];
             }
         }
+        
+        maintainContracts(false);
         updateUI();
         updateMorphDropdowns();
-        renderMarket();
-        startMarketTimer();
+        startDealerTimer();
     }
+
+    function applySaveState(parsed) {
+        wallet = Number(parsed.wallet) || 0;
+        bankAccount = Number(parsed.bank) || 0;
+        prestige = Number(parsed.prestige) || 0;
+        maxRack = Number(parsed.maxRack) || 100;
+        incubatorLevel = Number(parsed.incLevel) || 0;
+        incubatorTotalBonus = Number(parsed.incBonus) || (incubatorLevel * 10); 
+        hybridMilestones = Number(parsed.hybMiles) || 0;
+        globalComboBuff = Number(parsed.globalCb) || 0;
+
+        snakeRack = Array.isArray(parsed.rack) ? parsed.rack : [];
+        legendaryArchive = Array.isArray(parsed.archive) ? parsed.archive : [];
+        unlockedMorphs = Array.isArray(parsed.morphs) ? parsed.morphs : [];
+        activeRentals = Array.isArray(parsed.rentals) ? parsed.rentals : [];
+        zooLog = Array.isArray(parsed.zLog) ? parsed.zLog : [];
+        breedingContracts = Array.isArray(parsed.contracts) ? parsed.contracts : [];
+        
+        if(snakeRack.length > 0) {
+            monster = snakeRack[0];
+            generatePortrait(monster.seed, monster.dna, monster.type, monster.isShiny, monster.superColor, monster.heads);
+        } else {
+            monster = null;
+        }
+    }
+
+    // ==========================================
+    // 8. EVENT ATTACHMENT & BOOTSTRAP
+    // ==========================================
 
     function initGame() {
         setupTabs();
+        setInterval(updatePassiveTick, 1000); 
 
+        // Top Level Buttons
         var btnSave = document.getElementById('btn-save');
         if(btnSave) btnSave.addEventListener('click', function() { saveGame(); logMsg("Facility data secured."); });
         
         var btnWipe = document.getElementById('btn-wipe');
-        if(btnWipe) btnWipe.addEventListener('click', function() { localStorage.removeItem('serpent_syndicate_master_v11'); location.reload(); });
+        if(btnWipe) btnWipe.addEventListener('click', function() { 
+            if(confirm("DANGER: Are you absolutely sure you want to wipe all facility data? This cannot be undone.")) {
+                localStorage.removeItem('serpent_syndicate_master_v29'); 
+                localStorage.removeItem('serpent_syndicate_master_v28'); 
+                location.reload(); 
+            }
+        });
+
+        // IMPORT / EXPORT DATA
+        var btnExport = document.getElementById('btn-export');
+        if(btnExport) btnExport.addEventListener('click', function() {
+            try {
+                var code = btoa(encodeURIComponent(JSON.stringify(getSaveStateObject())));
+                document.getElementById('save-export-box').value = code;
+                logMsg("Save code generated. Copy and store it securely.", "cyan");
+            } catch(e) { logMsg("Error generating save code.", "warning"); }
+        });
+
+        var btnImport = document.getElementById('btn-import');
+        if(btnImport) btnImport.addEventListener('click', function() {
+            var input = document.getElementById('save-import-box').value.trim();
+            if(!input) return alert("Paste a save code in the text box first.");
+            if(confirm("WARNING: Importing a save will overwrite current progress. Proceed?")) {
+                try {
+                    var parsed = JSON.parse(decodeURIComponent(atob(input)));
+                    applySaveState(parsed);
+                    saveGame();
+                    logMsg("Save code imported successfully!", "mythic-text");
+                    updateUI();
+                    updateMorphDropdowns();
+                } catch(e) {
+                    alert("Invalid save code.");
+                }
+            }
+        });
 
         var btnGod = document.getElementById('btn-god');
         if(btnGod) btnGod.addEventListener('click', function() {
-            wallet += 99999999;
+            wallet += 99999999999999; 
             logMsg("=== SYNDICATE FUNDING INJECTED ===", "mythic-text");
             updateUI();
         });
 
+        // Bank Events
+        var btnBankDep = document.getElementById('btn-bank-dep');
+        if(btnBankDep) btnBankDep.addEventListener('click', function() {
+            if(wallet > 0) {
+                bankAccount += wallet;
+                wallet = 0;
+                logMsg("Funds secured in High-Yield Savings.", "highlight");
+                updateUI();
+            }
+        });
+
+        var btnBankWith = document.getElementById('btn-bank-with');
+        if(btnBankWith) btnBankWith.addEventListener('click', function() {
+            if(bankAccount > 0) {
+                wallet += bankAccount;
+                bankAccount = 0;
+                logMsg("Funds withdrawn from High-Yield Savings.", "highlight");
+                updateUI();
+            }
+        });
+
+        // Upgrades
         var btnUpgradeRack = document.getElementById('btn-upgrade-rack');
         if(btnUpgradeRack) btnUpgradeRack.addEventListener('click', function() {
             var cost = (maxRack / 10) * 5000;
@@ -1388,45 +2541,57 @@
             }
         });
 
-        var btnUpgradeIncubator = document.getElementById('btn-upgrade-incubator');
-        if(btnUpgradeIncubator) btnUpgradeIncubator.addEventListener('click', function() {
-            var cost = (incubatorLevel + 1) * 2500;
-            if (wallet >= cost) {
-                wallet -= cost;
-                incubatorLevel++;
-                logMsg(`Incubators Upgraded: Base stats +${incubatorLevel * 25}.`, 'highlight');
-                updateUI();
-            } else {
-                alert("Insufficient funds for this upgrade.");
-            }
-        });
+        // Incubation Climate Upgrades
+        var btnInc1 = document.getElementById('btn-inc-1');
+        if(btnInc1) btnInc1.addEventListener('click', function() { window.buyIncubator('1'); });
+
+        var btnIncHalf = document.getElementById('btn-inc-half');
+        if(btnIncHalf) btnIncHalf.addEventListener('click', function() { window.buyIncubator('half'); });
+
+        var btnIncMax = document.getElementById('btn-inc-max');
+        if(btnIncMax) btnIncMax.addEventListener('click', function() { window.buyIncubator('max'); });
+
+        // Sanctioned Competition
+        var btnRunComp = document.getElementById('btn-run-comp');
+        if(btnRunComp) btnRunComp.addEventListener('click', function() { window.runCompetition(); });
+
 
         var btnSellSnake = document.getElementById('btn-sell-snake');
         if(btnSellSnake) btnSellSnake.addEventListener('click', function() {
             if (!monster) return;
             var index = snakeRack.indexOf(monster);
-            if(index > -1) quickSell(index);
+            if(index > -1) window.quickSell(index);
         });
-        
-        var btnQuickSellDash = document.getElementById('btn-quick-sell-dash');
-        if(btnQuickSellDash) btnQuickSellDash.addEventListener('click', function() {
-            if (!monster) return;
-            var index = snakeRack.indexOf(monster);
-            if(index > -1) quickSell(index);
+
+        // Sorting
+        var btnSortRecent = document.getElementById('btn-sort-recent');
+        if(btnSortRecent) btnSortRecent.addEventListener('click', function() {
+            snakeRack.sort(function(a, b) { return b.hatchTime - a.hatchTime; });
+            renderRack();
+            logMsg("Racks sorted by Recent.", "highlight");
         });
 
         var btnSortVal = document.getElementById('btn-sort-val');
         if(btnSortVal) btnSortVal.addEventListener('click', function() {
             snakeRack.sort(function(a, b) { return calculateTotalValue(b) - calculateTotalValue(a); });
             renderRack();
-            logMsg("Racks sorted by value (High to Low).", "highlight");
+            logMsg("Racks sorted by Value.", "highlight");
         });
 
-        var btnSummon = document.getElementById('btn-summon');
-        if(btnSummon) btnSummon.addEventListener('click', function() {
-            var randomSeed = Math.floor(Math.random() * 90000) + 10000;
-            generateSnake(randomSeed.toString(), null, "Wild Caught");
+        var btnSortRarity = document.getElementById('btn-sort-rarity');
+        if(btnSortRarity) btnSortRarity.addEventListener('click', function() {
+            snakeRack.sort(function(a, b) { 
+                var aBase = speciesPool.find(s => s.name === a.species)?.pts || 0;
+                var bBase = speciesPool.find(s => s.name === b.species)?.pts || 0;
+                return bBase - aBase; 
+            });
+            renderRack();
+            logMsg("Racks sorted by Base Species Rarity.", "highlight");
         });
+
+        // Clutch Incubation Events
+        var btnSummon = document.getElementById('btn-summon');
+        if(btnSummon) btnSummon.addEventListener('click', function() { startIncubation(null, "Wild Caught"); });
 
         var btnSummonMorph = document.getElementById('btn-summon-morph');
         if(btnSummonMorph) btnSummonMorph.addEventListener('click', function() {
@@ -1434,56 +2599,198 @@
             var selectedDna = select ? select.value : "";
             if (!selectedDna) { alert("Select an unlocked morph first."); return; }
             var selectedOption = select.options[select.selectedIndex].text;
-            var randomSeed = Math.floor(Math.random() * 90000) + 10000;
-            generateSnake(randomSeed.toString(), selectedDna, `Line-Bred (${selectedOption})`);
+            startIncubation(selectedDna, `Line-Bred (${selectedOption})`);
         });
 
-        var btnCross = document.getElementById('btn-crossbreed');
-        if(btnCross) btnCross.addEventListener('click', function() {
+        var btnCrossbreed = document.getElementById('btn-crossbreed');
+        if(btnCrossbreed) btnCrossbreed.addEventListener('click', function() {
             var el1 = document.getElementById('cross-1');
             var el2 = document.getElementById('cross-2');
             var idx1 = el1 ? el1.value : "";
             var idx2 = el2 ? el2.value : "";
             if (idx1 === "" || idx2 === "") { alert("Select two snakes from your rack to cross-breed."); return; }
-            if (idx1 === idx2) { alert("You cannot breed a snake with itself!"); return; }
             
             var sire = snakeRack[idx1];
             var dam = snakeRack[idx2];
+
+            if (sire.isRented || dam.isRented) return alert("Cannot breed snakes that are currently on tour.");
             
-            var parentLineage = `${sire.variantName} × ${dam.variantName}`;
+            var parentLineage = (idx1 === idx2) ? `Self-Bred (${sire.variantName})` : `${sire.variantName} × ${dam.variantName}`;
             var hybridDna = `${sire.dna} x ${dam.dna}`;
-            var randomSeed = Math.floor(Math.random() * 90000) + 10000;
             
-            generateSnake(randomSeed.toString(), hybridDna, parentLineage);
+            var shinyInherited = false;
+            if((sire.isShiny || dam.isShiny) && Math.random() < 0.10) shinyInherited = true;
+            
+            var inherited = [...getInheritedTraits(sire), ...getInheritedTraits(dam)];
+            startIncubation(hybridDna, parentLineage, inherited, shinyInherited);
         });
 
-        var btnScavenge = document.getElementById('btn-scavenge');
-        if(btnScavenge) btnScavenge.addEventListener('click', function() {
-            var keys = Object.keys(market);
-            var randomKey = keys[Math.floor(Math.random() * keys.length)];
-            var asset = market[randomKey];
-            var qty = Math.floor(Math.random() * 500) + 1;
-            asset.owned += qty;
-            logMsg(`Local Herp Show: Acquired ${qty.toLocaleString()} ${asset.name}!`, "highlight");
-            updateUI();
+        // Mutagen Check
+        var btnMutagen = document.getElementById('btn-mutagen');
+        if(btnMutagen) btnMutagen.addEventListener('click', function() {
+            if(!monster) return alert("Select a snake first.");
+            if(monster.isRented) return alert("Cannot experiment on a snake that is currently on tour!");
+            if(wallet < 250000) return alert("Insufficient funds! Requires $250k.");
+            if(confirm("WARNING: 10% chance to instantly kill this snake. Proceed?")) {
+                wallet -= 250000;
+                if(Math.random() < 0.10) {
+                    logMsg(`${monster.variantName} ${monster.species} exploded from the mutagen!`, "warning");
+                    var idx = snakeRack.indexOf(monster);
+                    if(idx > -1) snakeRack.splice(idx, 1);
+                    monster = null;
+                    var placeholder = document.getElementById('portrait-placeholder');
+                    var canvas = document.getElementById('monster-canvas');
+                    var pCont = document.getElementById('portrait-container');
+                    if(placeholder) placeholder.style.display = 'flex';
+                    if(canvas) canvas.style.display = 'none';
+                    if(pCont) pCont.style.border = `2px solid var(--border)`;
+                } else {
+                    var baseVal = calculateBaseValue(monster);
+                    var highTiers = traitRarities.slice(4); 
+                    
+                    var numMutations = 3;
+                    var probs = [0.91, 0.92, 0.93, 0.94, 0.95, 0.96, 0.97, 0.98, 0.99, 1.00];
+                    for (var p of probs) {
+                        if (Math.random() <= p) numMutations++;
+                        else break;
+                    }
+
+                    for(var i = 0; i < numMutations; i++) {
+                        var selectedRarity = highTiers[Math.floor(Math.random() * highTiers.length)];
+                        var adj = traitAdjectives[Math.floor(Math.random() * traitAdjectives.length)];
+                        var noun = traitNouns[Math.floor(Math.random() * traitNouns.length)];
+                        var newTrait = {
+                            name: `${selectedRarity.name} Trait: ${adj} ${noun}`,
+                            color: selectedRarity.color,
+                            multi: selectedRarity.multi,
+                            tier: selectedRarity.tier,
+                            pts: selectedRarity.pts,
+                            bonuses: {}
+                        };
+                        var availableStats = [...statsList];
+                        for(var k=0; k < 3; k++) {
+                            var s = availableStats[Math.floor(Math.random() * availableStats.length)];
+                            if(!newTrait.bonuses[s]) newTrait.bonuses[s] = 0;
+                            newTrait.bonuses[s] += Math.floor(selectedRarity.stats * (0.8 + Math.random()*0.4));
+                        }
+                        monster.augments.push(newTrait);
+                    }
+                    calculateTotalValue(monster);
+                    calculateRarityScore(monster);
+                    logMsg(`${monster.variantName} survived and mutated ${numMutations} OVERPOWERED traits!`, "mythic-text");
+                }
+                updateUI();
+            }
         });
+
+        // Mystery Egg
+        var btnMysteryEgg = document.getElementById('btn-mystery-egg');
+        if(btnMysteryEgg) btnMysteryEgg.addEventListener('click', function() {
+            if(wallet >= 1000) {
+                if(snakeRack.length >= maxRack) {
+                    alert("Racks are full!"); return;
+                }
+                wallet -= 1000;
+                logMsg("Attempting to import Mystery Exotic Egg...", "cyan");
+                
+                setTimeout(function() {
+                    if(Math.random() < 0.90 && Math.random() < 0.85 && Math.random() < 0.80) {
+                        logMsg("Import Success! Mystery Egg survived all 3 checks.", "mythic-text");
+                        if(Math.random() > 0.5) startIncubation(null, "Black Market Import", [], false, true); 
+                        else startIncubation("Nightwalker", "Black Market Import", [], true, false); 
+                    } else {
+                        logMsg("Import Failed. Egg was confiscated or destroyed in transit.", "warning");
+                    }
+                    updateUI();
+                }, 1500);
+            } else {
+                alert("Insufficient funds! You need $1k.");
+            }
+        });
+
+        // Auto Hatch
+        var btnAutoHatch = document.getElementById('btn-auto-hatch');
+        if(btnAutoHatch) {
+            btnAutoHatch.addEventListener('click', function() {
+                autoHatchActive = !autoHatchActive;
+                if(autoHatchActive) {
+                    btnAutoHatch.innerText = "Auto-Incubate: ON";
+                    btnAutoHatch.style.background = "var(--cyan)";
+                    btnAutoHatch.style.color = "#000";
+                    logMsg("Auto-Incubator Activated.", "highlight");
+                    
+                    autoHatchTimer = setInterval(function() {
+                        if(snakeRack.length < maxRack && !incubating) {
+                            startIncubation(null, "Wild Caught (Auto)");
+                        } else if (snakeRack.length >= maxRack) {
+                            clearInterval(autoHatchTimer);
+                            autoHatchActive = false;
+                            btnAutoHatch.innerText = "Toggle Auto-Incubate (3s/Clutch)";
+                            btnAutoHatch.style.background = "transparent";
+                            btnAutoHatch.style.color = "var(--bone)";
+                            logMsg("Auto-Incubator Paused - Racks Full.", "warning");
+                        }
+                    }, 4000); 
+                } else {
+                    clearInterval(autoHatchTimer);
+                    btnAutoHatch.innerText = "Toggle Auto-Incubate (3s/Clutch)";
+                    btnAutoHatch.style.background = "transparent";
+                    btnAutoHatch.style.color = "var(--bone)";
+                    logMsg("Auto-Incubator Deactivated.", "warning");
+                }
+            });
+        }
+
+        // Auto Breed Top Pair
+        var btnAutoBreed = document.getElementById('btn-auto-breed');
+        if(btnAutoBreed) {
+            btnAutoBreed.addEventListener('click', function() {
+                autoBreedActive = !autoBreedActive;
+                if(autoBreedActive) {
+                    btnAutoBreed.innerText = "Auto-Breed: ON";
+                    btnAutoBreed.style.background = "var(--magenta)";
+                    btnAutoBreed.style.color = "#fff";
+                    logMsg("Auto-Breeder Activated. Processing top pairs...", "highlight");
+                } else {
+                    btnAutoBreed.innerText = "Auto-Synthesize Top Pair (2s)";
+                    btnAutoBreed.style.background = "transparent";
+                    btnAutoBreed.style.color = "var(--magenta)";
+                    logMsg("Auto-Breeder Deactivated.", "warning");
+                }
+            });
+        }
+
+        // Show Shows Setup
+        var setupScavenge = function(btnId, min, max, label) {
+            var btn = document.getElementById(btnId);
+            if(btn) btn.addEventListener('click', function() {
+                var keys = Object.keys(market);
+                var asset = market[keys[Math.floor(Math.random() * keys.length)]];
+                var qty = Math.floor(Math.random() * (max - min + 1)) + min;
+                asset.owned += qty;
+                logMsg(`${label}: Acquired ${qty.toLocaleString()} ${asset.name}!`, "highlight");
+                updateUI();
+            });
+        };
+
+        setupScavenge('btn-scavenge-local', 1, 500, "Local Show");
+        setupScavenge('btn-scavenge-regional', 500, 2500, "Regional Show");
+        setupScavenge('btn-scavenge-state', 2500, 10000, "State Show");
 
         var btnBoss = document.getElementById('btn-boss');
         if(btnBoss) btnBoss.addEventListener('click', function() {
             var keys = Object.keys(market);
-            var randomKey = keys[Math.floor(Math.random() * keys.length)];
-            var asset = market[randomKey];
-            var qty = Math.floor(Math.random() * 50000) + 1000;
+            var asset = market[keys[Math.floor(Math.random() * keys.length)]];
+            var qty = Math.floor(Math.random() * (50000 - 10000 + 1)) + 10000;
             asset.owned += qty;
             prestige++;
-            logMsg(`National Syndicate Expo: Acquired ${qty.toLocaleString()} ${asset.name}! Prestige increased.`, "mythic-text");
+            logMsg(`National Expo: Prestige increased! +50% Global Value Multiplier.`, "mythic-text");
             updateUI();
         });
 
         loadGame();
     }
 
-    // BOOTSTRAP FIRE
     if (document.readyState === 'loading') {
         document.addEventListener('DOMContentLoaded', initGame);
     } else {
